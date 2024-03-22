@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/code0"
+        android:title="广播获取数据" />
+    <item
+        android:id="@+id/code1"
+        android:title="摩托罗拉一维" />
+    <item
+        android:id="@+id/code2"
+        android:title="摩托罗拉二维" />
+    <item
+        android:id="@+id/code3"
+        android:title="霍尼韦尔一维" />
+    <item
+        android:id="@+id/code4"
+        android:title="霍尼韦尔二维" />
+    <item
+        android:id="@+id/code5"
+        android:title="图腾二维" />
+    <item
+        android:id="@+id/code6"
+        android:title="新大陆二维" />
+</menu>

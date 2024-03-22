@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.andorid.scandemo">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Em_QR_Code_Scanning_App_20211016">
+<!--        <activity-->
+<!--            android:name=".BroadcastActivity"-->
+<!--            android:exported="false"-->
+<!--            android:label="广播获取数据" />-->
+        <activity
+            android:name=".symbologies.NewlandActivityActivity"
+            android:exported="false"
+            android:label="新大陆码制设置" />
+        <activity
+            android:name=".symbologies.TotinfoActivity"
+            android:exported="false"
+            android:label="图腾二维码制设置" />
+        <activity
+            android:name=".symbologies.Honeywell2DActivity"
+            android:exported="false"
+            android:label="霍尔二维码制设置" />
+        <activity
+            android:name=".BroadcastActivity"
+            android:label="广播获取数据"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

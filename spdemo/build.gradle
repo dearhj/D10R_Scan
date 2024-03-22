@@ -1,0 +1,48 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdk 34
+    namespace "com.android.spdemo"
+    defaultConfig {
+        applicationId "com.android.spdemo"
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+        //noinspection ChromeOsAbiSupport
+        ndk { abiFilters 'armeabi-v7a', 'armeabi' }
+    }
+    signingConfigs {
+        sign {
+            //T50 T195 Q66 Q865M_Q115M_android11 Q86  Q86M Q81 SwingA
+            storeFile file("D:\\Android12SignerGUI\\SignFiles\\Q86\\platform.jks")
+            storePassword('android')
+            keyAlias('android')
+            keyPassword('android')
+        }
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            signingConfig signingConfigs.sign
+        }
+        release {
+            minifyEnabled false
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_19
+        targetCompatibility JavaVersion.VERSION_19
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+}

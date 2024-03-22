@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:id="@+id/rl_left_key"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@drawable/shape_line_bottom">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="3dp"
+            android:text="@string/left_scan_btn"
+            android:textColor="@color/black_333333"
+            android:textSize="14sp" />
+
+        <com.suke.widget.SwitchButton
+            android:id="@+id/sb_leftKey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:sb_checked_color="#4af28b"
+            app:sb_checkline_color="#d1895f" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_right_key"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_below="@+id/rl_left_key"
+        android:background="@drawable/shape_line_bottom">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="3dp"
+            android:text="@string/right_scan_btn"
+            android:textColor="@color/black_333333"
+            android:textSize="14sp" />
+
+        <com.suke.widget.SwitchButton
+            android:id="@+id/sb_rightKey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:sb_checked_color="#4af28b"
+            app:sb_checkline_color="#d1895f" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_F_key"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_below="@+id/rl_right_key"
+        android:background="@drawable/shape_line_bottom">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="3dp"
+            android:text="@string/fkey_btn"
+            android:textColor="@color/black_333333"
+            android:textSize="14sp" />
+
+        <com.suke.widget.SwitchButton
+            android:id="@+id/sb_fKey"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:sb_checked_color="#4af28b"
+            app:sb_checkline_color="#d1895f" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_F1_key"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_below="@+id/rl_F_key"
+        android:background="@drawable/shape_line_bottom">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="3dp"
+            android:text="@string/f1key_btn"
+            android:textColor="@color/black_333333"
+            android:textSize="14sp" />
+
+        <com.suke.widget.SwitchButton
+            android:id="@+id/sb_f1Key"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:sb_checked_color="#4af28b"
+            app:sb_checkline_color="#d1895f" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_F2_key"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_below="@+id/rl_F1_key"
+        android:background="@drawable/shape_line_bottom">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="3dp"
+            android:text="@string/f2key_btn"
+            android:textColor="@color/black_333333"
+            android:textSize="14sp" />
+
+        <com.suke.widget.SwitchButton
+            android:id="@+id/sb_f2Key"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:sb_checked_color="#4af28b"
+            app:sb_checkline_color="#d1895f" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_Suspension_btn"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_below="@+id/rl_F2_key"
+        android:background="@drawable/shape_line_bottom">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="3dp"
+            android:text="@string/xuanfu_scan"
+            android:textColor="@color/black_333333"
+            android:textSize="14sp" />
+
+        <com.suke.widget.SwitchButton
+            android:id="@+id/sb_Suspension_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            app:sb_checked_color="#4af28b"
+            app:sb_checkline_color="#d1895f" />
+    </RelativeLayout>
+
+</RelativeLayout>

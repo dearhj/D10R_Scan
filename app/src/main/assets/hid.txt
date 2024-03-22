@@ -1,0 +1,1 @@
+/sys/class/EM_BT_CONTROL/input_buf

@@ -1,0 +1,41 @@
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/app/src/main/res/drawable/btn_public_bluetoqblue_onclick_yuan.xml" value="0.311" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/app/src/main/res/drawable/rg_bg_blue_btn_radius.xml" value="0.311" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/app/src/main/res/drawable/rg_bg_blue_radius.xml" value="0.311" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/app/src/main/res/layout/activity_choose_scanner.xml" value="0.1911231884057971" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/app/src/main/res/layout/activity_data.xml" value="0.3536458333333333" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/app/src/main/res/layout/activity_recyclerview.xml" value="0.1" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/app/src/main/res/layout/activity_setting.xml" value="0.33" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/app/src/main/res/layout/activity_sptest.xml" value="0.3088768115942029" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/app/src/main/res/layout/activity_start.xml" value="0.1780821917808219" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/app/src/main/res/layout/data_edit.xml" value="0.33" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/app/src/main/res/layout/dialog_iv.xml" value="0.19202898550724637" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/app/src/main/res/layout/dialog_slider.xml" value="0.17198581560283688" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/app/src/main/res/layout/item_layout.xml" value="0.17198581560283688" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/app/src/main/res/layout/item_recy_cardview_cb.xml" value="0.17198581560283688" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/app/src/main/res/layout/title_item_layout.xml" value="0.17198581560283688" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/app/src/main/res/menu/menu_data.xml" value="0.3536458333333333" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/app/src/main/res/menu/setting.xml" value="0.3536458333333333" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/broadcastreceiver/src/main/res/layout/activity_main.xml" value="0.31296296296296294" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/scandemo/src/main/res/layout/activity_broadcast.xml" value="0.34193840579710144" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/scandemo/src/main/res/layout/activity_honeywell_2d_activity.xml" value="0.17198581560283688" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/scandemo/src/main/res/layout/activity_main.xml" value="0.17198581560283688" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/scandemo/src/main/res/layout/activity_newland_activity.xml" value="0.17864583333333334" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/scandemo/src/main/res/layout/activity_recyclerview.xml" value="0.3536458333333333" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/scandemo/src/main/res/layout/dialog_slider.xml" value="0.3536458333333333" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/scandemo/src/main/res/layout/item_layout.xml" value="0.3536458333333333" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/scandemo/src/main/res/layout/item_recy_cardview_cb.xml" value="0.3536458333333333" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/scandemo/src/main/res/layout/title_item_layout.xml" value="0.3536458333333333" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/scandemo/src/main/res/menu/main.xml" value="0.3536458333333333" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/uartdemo/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/code/AndroidCode/Em_QR_Code_Scanning_App_20211016/uartdemo/src/main/res/layout/activity_spactivity.xml" value="0.3536458333333333" />
+        <entry key="..\:/emcode/hardcode/app/src/main/res/layout/about.xml" value="0.20923913043478262" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_19" default="true" project-jdk-name="corretto-19" project-jdk-type="JavaSDK" />
+</project>

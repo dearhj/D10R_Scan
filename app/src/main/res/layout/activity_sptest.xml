@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SPTestActivity">
+
+    <TextView
+        android:id="@+id/tips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="本页面是用于直接发送串口指令，并将所有串口原始数据显示于本页面"
+        android:textColor="@color/black" />
+
+    <LinearLayout
+        android:id="@+id/ll_control"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/cbContinuity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="连续" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="间隔" />
+
+            <EditText
+                android:id="@+id/sendMs"
+                style="@style/Widget.AppCompat.EditText"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:text="100" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ms" />
+
+            <CheckBox
+                android:id="@+id/cbHexSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hex发" />
+
+            <CheckBox
+                android:id="@+id/cbHexReceive"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hex收" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.github.h4de5ing.baseui.widget.CleanEditText
+                android:id="@+id/etInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawableEnd="@drawable/ic_baseline_clear_24"
+                android:hint="please type string"
+                android:text="aztena?." />
+
+            <Button
+                android:id="@+id/btnSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="send" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/ll_control"
+        android:layout_below="@+id/tips">
+
+        <com.github.h4de5ing.baseui.widget.CleanEditText
+            android:id="@+id/result"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawableEnd="@drawable/ic_baseline_clear_24"
+            android:editable="false"
+            android:gravity="top"
+            android:text="result:\n" />
+    </LinearLayout>
+</RelativeLayout>

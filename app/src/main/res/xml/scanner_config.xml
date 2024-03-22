@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<deviceCofing>
+    <device>
+        <property name="model" value="T52"/>
+
+        <!--public static final int DTHONEYWELL = 4;//代表honeywell的二维码类型
+        public static final int DTHONEYWELLONE = 3;//honeywell一维码
+        public static final int DTMoTOSE2707 = 2;//摩托二维码
+        public static final int DTMoToSE655 = 1;//摩托一维码-->
+        <property name="ScanModule" value="3"/>
+
+        <!--扫描开机自启-->
+        <property name="openService_reboot" value = "false"/>
+        <!--串口节点--><!--ttyMT1-->
+        <property name="SerialPortName" value="/dev/ttyMSM1"/>
+        <!--打开关闭节点--><!--mtk的值：/sys/devices/soc/10003000.keypad/scan_leveltrigger_enable-->
+        <property name="FileNodeCloseOpen" value = "/sys/class/EMDEBUG/gpio_ctrl"/>
+        <!--打开扫描的值-->
+        <property name="OpenScanValue" value="10" />
+        <!--关闭扫描的值-->
+        <property name="CloseScanValue" value="11" />
+        <!--上电节点-->
+        <property name="FileNodePowerOn" value = "/sys/devices/soc/10003000.keypad/scantrigger_enable"/>
+        <!--声音开关-->
+        <property name="scanVoice" value = "true"/>
+        <!--震动开关-->
+        <property name="scanVibrate" value = "false"/>
+        <!--hid模式，一定要和控件模式互斥-->
+        <property name="HIDChoose" value = "true"/>
+        <!--新增控件输入模式-->
+        <property name="WidgetChoose" value = "false"/>
+
+        <!--针对T75多个地方使用到节点的问题===true表示有需要切换，false表示不需要切换-->
+        <property name="SerialPortSwitch" value="true"/>
+        <!--需要切换的文件节点===--><!--mtk的值：/sys/devices/soc/10003000.keypad/scan_leveltrigger_enable-->
+        <property name="FileNodeChannelSwitch" value = "/sys/class/EMDEBUG/gpio_ctrl"/>
+        <!--需要传入切换节点的值，直接填写SCAⅡ值-->
+        <property name="FileNodeChannelValue" value = "0"/>
+
+        <!--上传-->
+        <property name="EnterChoose" value = "false"/>
+        <!--tab 功能需要可以开关和加载在前面和后面 决定改成3个字段 close : 关闭， ahead:加在前面，behind：加在后面-->
+        <property name="TabChoose" value = "close"/>
+        <!--屏幕方向：Vertical  or Horizontal or Auto -->
+        <property name="ScreenDirection" value = "Vertical"/>
+        <!--扫描模式 Async or Sync-->
+        <property name="ScanModel" value = "Async"/>
+        <!--剪切板功能的选择-->
+        <property name="ClipBoardChoose" value = "false"/>
+        <!--新增软解读取扫描头的id,默认为2，-->
+        <property name="ReaderID" value = "2"/>
+
+    </device>
+    <buttons>
+        <button id="F1 key">
+            <!--松开触发的是关闭广播，摁下去触发的是打开广播-->
+            <closeBroadcast>com.android.action.keyevent.KEYCODE_KEYCODE_SCAN_L_UP</closeBroadcast>
+            <openBroadcast>com.android.action.keyevent.KEYCODE_KEYCODE_SCAN_L_DOWN</openBroadcast>
+            <value>true</value><!--广播的默认值，开和关==true  or  false-->
+        </button>
+        <button id="F2 key">
+            <closeBroadcast>com.android.action.keyevent.KEYCODE_KEYCODE_SCAN_R_UP</closeBroadcast>
+            <openBroadcast>com.android.action.keyevent.KEYCODE_KEYCODE_SCAN_R_DOWN</openBroadcast>
+            <value>true</value>
+        </button>
+        <button id="Right key">
+            <closeBroadcast>com.android.action.keyevent.KEYCODE_KEYCODE_SCAN_F_UP</closeBroadcast>
+            <openBroadcast>com.android.action.keyevent.KEYCODE_KEYCODE_SCAN_F_DOWN</openBroadcast>
+            <value>true</value>
+        </button>
+    </buttons>
+</deviceCofing>
+

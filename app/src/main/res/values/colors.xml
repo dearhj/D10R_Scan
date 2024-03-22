@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#4fb0c6</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="background_blue">#79CDCD</color>
+    <color name="blue">#003cd2</color>
+    <color name="background_white">#FFFFFF</color>
+    <color name="background_black">#6E6E6E</color>
+    <color name="background_gray">#DADADA</color>
+    <color name="dialog_title_color">#ff1e83de</color>
+    <color name="white">#ffffffff</color>
+    <color name="black">#000000</color>
+    <color name="common_title_color">#ffcdf2ff</color>
+    <color name="common_bg_color">#fff9fafb</color>
+    <color name="common_text_color">#ff333333</color>
+    <color name="common_little_text_color">#ff919191</color>
+    <color name="common_title_little_text_color">#ff1e83de</color>
+    <color name="black_333333">#333333</color>
+    <color name="blue_287c8f">#287c8f</color>
+    <color name="white_d5d5d5">#d5d5d5</color>
+    <color name="black_66">#666666</color>
+    <color name="black_eee">#eeeeee</color>
+    <color name="black_ddd">#dddddd</color>
+    <color name="black_999">#999999</color>
+    <color name="black_ccd1d9">#ccd1d9</color>
+</resources>

@@ -1,0 +1,76 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:background="#EEE9E9">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:background="#D4D4D4"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:text="@string/str_timeout_title"
+        android:textColor="@color/black"
+        android:textSize="30px" />
+
+    <LinearLayout
+        android:id="@+id/LinearInput"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="@string/str_timeout_input"
+            android:textColor="@color/black"
+            android:textSize="24px" />
+
+        <EditText
+            android:id="@+id/mEdTimeoutValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@color/background_gray"
+            android:hint="30"
+            android:inputType="number"
+            android:maxLength="3"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textSize="20px" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/LinearInput"
+        android:layout_marginTop="10dp"
+        android:background="#DBDBDB"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/mBtEnsure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_weight="1"
+            android:text="@string/str_ensure"
+            android:textSize="20px" />
+
+        <Button
+            android:id="@+id/mBtCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_weight="1"
+            android:text="@string/str_cancel"
+            android:textSize="20px" />
+    </LinearLayout>
+</RelativeLayout>

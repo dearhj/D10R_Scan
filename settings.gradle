@@ -1,0 +1,30 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
+}
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+        google()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        maven { url 'https://gitee.com/lex1992/repository/raw/master/repository' }
+        maven { url 'https://github.com/h4de5ing/repository/raw/master/repository' }
+        maven { url 'D:\\repository\\repository\\repository' }
+    }
+}
+include ':app'
+include ':expandablerecyclerview'
+include ':scannerlib'
+//include ':scandemo'
+//include ':spdemo'
+//include ':trigger'
+//include ':OTALibrary'
+//project(":OTALibrary").projectDir = new File("D:\\code\\repository_src\\OTALibrary")
+include ':VanSerialPort'
+project(":VanSerialPort").projectDir = new File("D:\\repository\\repository_src\\VanSerialPort")
+//include ':SerialPortLibrary'
+//project(":SerialPortLibrary").projectDir = new File("D:\\repository\\repository_src\\SerialPortLibrary")
