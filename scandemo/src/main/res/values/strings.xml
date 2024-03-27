@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">ScanDemo</string>
-    <string name="not_exist">命令不存在</string>
-    <string name="not_supported">不支持的命令</string>
-    <string name="command_failed">命令设置失败</string>
-    <string name="command_success">命令设置成功</string>
-    <string name="close">关闭</string>
-</resources>

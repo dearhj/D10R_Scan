@@ -83,7 +83,8 @@
     <string name="honeywelltwo">honeywell Two dimensional</string>
     <string name="honeywellone">honeywell One dimensional</string>
     <string name="motorola">Motorola</string>
-    <string name="motorolatwo">Motorola Two dimensional</string>
+    <string name="hr22p">HR22+</string>
+    <string name="em3100">EM3100</string>
     <string name="motoloraone">Motorola One dimensional</string>
     <string name="totinfo_scanner">Totinfo two dimensional</string>
     <string name="newland_scanner">Newland two dimensional</string>
@@ -191,6 +192,7 @@
     <string name="import_failed">import failed,try again reboot app</string>
     <string name="block_volume_keys">Block volume keys</string>
     <string name="enable_scan">Enable scanner</string>
+    <string name="enable_scan_summary">开启扫码功能(扫描器重新开机后将默认打开)</string>
     <string name="song_shou_close">Press to scan until getting a result</string>
     <string name="continuous_close">Continuous scanning</string>
     <string name="Induction_close">Induction scanning</string>
@@ -258,4 +260,25 @@
     <string name="service_running">Scanning and monitoring service is running...</string>
     <string name="action">Action:</string>
     <string name="no_setting">Not Set</string>
+
+    <string name="sound_start_settings">开机提示音</string>
+    <string name="sound_start_settings_summary">扫码设备开机后响起提示音</string>
+
+    <string name="re_scan_mode">重读延迟(相同条码)</string>
+    <string name="one_scan_timeout">一次读码超时时间</string>
+    <string name="scan_sp">识读偏好</string>
+    <string name="screen">屏幕模式</string>
+    <string name="normal">普通模式</string>
+    <string name="scan_voice_value">解码提示音音量</string>
+    <string name="light_bt">外部照明灯设置</string>
+    <string name="light_am">瞄准灯设置</string>
+    <string name="scan_voice_l">小</string>
+    <string name="scan_voice_m">中</string>
+    <string name="scan_voice_h">大</string>
+    <string name="TextConfigErr">配置错误</string>
+    <string name="open">开启</string>
+    <string name="TextSenseMode">感应扫描模式</string>
+    <string name="TextContinuousMode">连续扫描模式</string>
+    <string name="TextLevelTriggerMode">电平触发模式</string>
+    <string name="TextPulseMode">脉冲模式</string>
 </resources>

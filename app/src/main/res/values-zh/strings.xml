@@ -82,7 +82,8 @@
     <string name="honeywelltwo">霍尼韦尔二维</string>
     <string name="honeywellone">霍尼韦尔一维</string>
     <string name="motorola">摩托罗拉</string>
-    <string name="motorolatwo">摩托罗拉二维</string>
+    <string name="hr22p">HR22+</string>
+    <string name="em3100">EM3100</string>
     <string name="motoloraone">摩托罗拉一维</string>
     <string name="totinfo_scanner">图腾二维</string>
     <string name="newland_scanner">新大陆二维</string>
@@ -189,6 +190,7 @@
     <string name="import_failed">导入失败,重启APP在试一次</string>
     <string name="block_volume_keys">屏蔽音量键</string>
     <string name="enable_scan">启用扫码</string>
+    <string name="enable_scan_summary">开启扫码功能(扫描器重新开机后将默认打开)</string>
     <string name="get_result_close">按下触发和松开停止</string>
     <string name="song_shou_close">按下扫描直到取得扫码结果</string>
     <string name="continuous_close">连续扫码模式</string>
@@ -255,4 +257,25 @@
     <string name="service_running">扫码监听服务运行中...</string>
     <string name="action">动作：</string>
     <string name="no_setting">未设置</string>
+    <string name="sound_start_settings">开机提示音</string>
+    <string name="sound_start_settings_summary">扫码设备开机后响起提示音</string>
+
+
+    <string name="re_scan_mode">重读延迟(相同条码)</string>
+    <string name="one_scan_timeout">一次读码超时时间</string>
+    <string name="scan_sp">识读偏好</string>
+    <string name="screen">屏幕模式</string>
+    <string name="normal">普通模式</string>
+    <string name="scan_voice_value">解码提示音音量</string>
+    <string name="light_bt">外部照明灯设置</string>
+    <string name="light_am">瞄准灯设置</string>
+    <string name="scan_voice_l">小</string>
+    <string name="scan_voice_m">中</string>
+    <string name="scan_voice_h">大</string>
+    <string name="TextConfigErr">配置错误</string>
+    <string name="open">开启</string>
+    <string name="TextSenseMode">感应扫描模式</string>
+    <string name="TextContinuousMode">连续扫描模式</string>
+    <string name="TextLevelTriggerMode">电平触发模式</string>
+    <string name="TextPulseMode">脉冲模式</string>
 </resources>

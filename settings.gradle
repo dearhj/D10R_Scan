@@ -17,14 +17,8 @@ dependencyResolutionManagement {
     }
 }
 include ':app'
-include ':expandablerecyclerview'
-include ':scannerlib'
-//include ':scandemo'
-//include ':spdemo'
-//include ':trigger'
-//include ':OTALibrary'
-//project(":OTALibrary").projectDir = new File("D:\\code\\repository_src\\OTALibrary")
-include ':VanSerialPort'
-project(":VanSerialPort").projectDir = new File("D:\\repository\\repository_src\\VanSerialPort")
+include ':nlsdk'
+//include ':VanSerialPort'
+//project(":VanSerialPort").projectDir = new File("D:\\repository\\repository_src\\VanSerialPort")
 //include ':SerialPortLibrary'
 //project(":SerialPortLibrary").projectDir = new File("D:\\repository\\repository_src\\SerialPortLibrary")

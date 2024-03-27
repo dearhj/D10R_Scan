@@ -11,22 +11,15 @@
     <uses-permission
         android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
         tools:ignore="ProtectedPermissions" />
-    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.SYSTEM_OVERLAY_WINDOW" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
-    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL" />
-    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS" />
 
     <application
-        android:name=".MyApplication"
+        android:name="com.scanner.d10r.hardware.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -34,12 +27,13 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".StartActivity"
+            android:name="com.scanner.d10r.hardware.StartActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            tools:ignore="Instantiatable" />
 
         <service
-            android:name=".barcodeservice.SerialPortService"
+            android:name="com.scanner.d10r.hardware.barcodeservice.UsbScanService"
             android:enabled="true"
             android:exported="true">
             <intent-filter android:priority="1000">
@@ -47,26 +41,13 @@
             </intent-filter>
         </service>
         <service
-            android:name=".barcodeservice.Gh0stService"
+            android:name="com.scanner.d10r.hardware.barcodeservice.Gh0stService"
             android:enabled="true"
             android:exported="true"
             android:process=":remote" />
-        <service
-            android:name=".barcodeservice.ScanKeyService"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/accessibilityservice" />
-        </service>
 
         <receiver
-            android:name=".barcodereceiver.BootBroadcastReceiver"
+            android:name="com.scanner.d10r.hardware.barcodereceiver.BootBroadcastReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -76,9 +57,10 @@
         </receiver>
 
         <activity
-            android:name=".WelcomeActivity"
+            android:name="com.scanner.d10r.hardware.WelcomeActivity"
             android:exported="true"
-            android:theme="@style/NoTitleActivity">
+            android:theme="@style/NoTitleActivity"
+            tools:ignore="Instantiatable">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -86,68 +68,32 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AboutActivity"
+            android:name="com.scanner.d10r.hardware.AboutActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="true"
-            android:label="@string/main_about" />
+            android:label="@string/main_about"
+            tools:ignore="Instantiatable" />
         <activity
-            android:name=".symbologies.HoneywellSigActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:label="@string/honeywellone"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".symbologies.HoneywellQrActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:label="@string/honeywelltwo"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".symbologies.MotoSigActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:label="@string/motoloraone"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".symbologies.MotoQrActivity2707"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:label="@string/motorolatwo"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".SettingActivity"
+            android:name="com.scanner.d10r.hardware.SettingActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:label="@string/main_settings"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            tools:ignore="Instantiatable" />
         <activity
-            android:name=".symbologies.TotinfoActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:label="@string/totinfo_symb_title"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".symbologies.NewlandActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:exported="true"
-            android:label="@string/newland_symb_title"
-            android:launchMode="singleTask" />
-        <activity
-            android:name=".ChooseScannerActivity"
+            android:name="com.scanner.d10r.hardware.ChooseScannerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:label="@string/setting_device"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            tools:ignore="Instantiatable" />
         <activity
-            android:name=".SPTestActivity"
-            android:exported="true"
-            android:label="串口测试页面" />
-        <activity
-            android:name=".DataActivity"
+            android:name="com.scanner.d10r.hardware.DataActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:exported="true"
             android:label="@string/scanner_result"
-            android:launchMode="singleTask" />
+            android:launchMode="singleTask"
+            tools:ignore="Instantiatable" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -158,11 +104,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-        <provider
-            android:name=".barcodereceiver.SettingsProvider"
-            android:authorities="com.scanner.hardware"
-            android:enabled="true"
-            android:exported="true" />
     </application>
 
 </manifest>

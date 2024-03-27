@@ -15,9 +15,9 @@ static def gitSha() {
 
 android {
     compileSdk 34
-    namespace "com.scanner.hardware"
+    namespace "com.scannerd.d10r.hardware"
     defaultConfig {
-        applicationId "com.scanner.hardware"
+        applicationId "com.scanner.d10r.hardware"
         minSdk 26
         targetSdk 34
         versionCode 50308
@@ -33,12 +33,6 @@ android {
         normal_sign {
             //T50 T195 Q66 Q865M_Q115M_android11 Q86  Q86M Q81 SwingA
             storeFile file("D:\\Android12SignerGUI\\SignFiles\\NewPublic\\platform.jks")
-            storePassword('android')
-            keyAlias('android')
-            keyPassword('android')
-        }
-        serialport_sign {
-            storeFile file("D:\\Android12SignerGUI\\SignFiles\\Q86\\platform.jks")
             storePassword('android')
             keyAlias('android')
             keyPassword('android')
@@ -77,24 +71,24 @@ android {
         sourceCompatibility JavaVersion.VERSION_19
         targetCompatibility JavaVersion.VERSION_19
     }
-    applicationVariants.configureEach { variant ->
-        def buildType = variant.buildType.name
-        def prefix = "hardscan"
-        def createTime = new Date().format("yyyyMMddHHmmss")
-        if (buildType == "release") {
-            variant.outputs.each {
-                def fromFile = it.outputFile
-                def intoFile = "D:/test/${prefix}/v${android.defaultConfig.versionName}/"
-//                def intoFile = "\\\\192.168.0.74\\亿道信息\\RD\\SW_A\\71备份过来的\\APP软件版本\\硬解扫描版本\\v${android.defaultConfig.versionName}"
-                copy {
-                    from fromFile
-                    into intoFile
-                    include('*.apk')
-                    rename('app-', "${prefix}_v${android.defaultConfig.versionName}_${createTime}_${gitSha()}_")
-                }
-            }
-        }
-    }
+//    applicationVariants.configureEach { variant ->
+//        def buildType = variant.buildType.name
+//        def prefix = "hardscan"
+//        def createTime = new Date().format("yyyyMMddHHmmss")
+//        if (buildType == "release") {
+//            variant.outputs.each {
+//                def fromFile = it.outputFile
+//                def intoFile = "D:/test/${prefix}/v${android.defaultConfig.versionName}/"
+////                def intoFile = "\\\\192.168.0.74\\亿道信息\\RD\\SW_A\\71备份过来的\\APP软件版本\\硬解扫描版本\\v${android.defaultConfig.versionName}"
+//                copy {
+//                    from fromFile
+//                    into intoFile
+//                    include('*.apk')
+//                    rename('app-', "${prefix}_v${android.defaultConfig.versionName}_${createTime}_${gitSha()}_")
+//                }
+//            }
+//        }
+//    }
 }
 
 dependencies {
@@ -114,13 +108,9 @@ dependencies {
     implementation "com.github.h4de5ing.document:document:1.0-20230817"
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.2"
     implementation "com.github.h4de5ing.filepicker:filepicker:1.0-20230411"
-    implementation "com.github.h4de5ing.netlib:netlib:2.0-20230322"
     implementation "com.github.h4de5ing.ota:ota:1.0-20230909"
     implementation "com.github.h4de5ing.zxing:zxing:1.0-20230906"
     implementation "com.google.zxing:core:3.5.2"
-    normalImplementation "com.github.h4de5ing.vanserialport:vanserialport:1.0-20230721"
-    serialportImplementation "com.giftedcat.serialportlibrary:serialportlib:1.0-20230721"
-    implementation project(":expandablerecyclerview")//TODO 重构此模块
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
     implementation "androidx.paging:paging-runtime-ktx:3.2.1"
     implementation "androidx.room:room-paging:2.6.1"
@@ -128,15 +118,6 @@ dependencies {
     implementation "androidx.room:room-runtime:2.6.1"
     ksp "androidx.room:room-compiler:2.6.1"
     debugImplementation "com.guolindev.glance:glance:1.1.0"
-    implementation project(":scannerlib")
-    implementation "org.java-websocket:Java-WebSocket:1.5.4"
-    implementation "org.nanohttpd:nanohttpd:2.3.1"
+
+    implementation project(path: ':nlsdk')
 }
-//task publishRelease(dependsOn: 'assembleRelease') {
-//    copy {
-//        from('build/outputs/apk/')
-//        into("\\\\192.168.0.74\\亿道信息\\RD\\SW_A\\71备份过来的\\APP软件版本\\硬解扫描版本\\${android.defaultConfig.versionName}版本")
-//    }
-//}
-//gradlew :app:assembleRelease
-//gradlew :app:dependencies > dependencies.txt
