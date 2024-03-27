@@ -13,7 +13,11 @@ import com.android.otalibrary.isLicense
 import com.android.otalibrary.showLicense
 import com.scanner.d10r.hardware.barcodeservice.Gh0stService
 import com.scanner.d10r.hardware.base.BaseActivity
+import com.scanner.d10r.hardware.bean.Constants.hr22p
+import com.scanner.d10r.hardware.symbology.SymbologyHrNewLandActivity
+import com.scanner.d10r.hardware.util.checkUsbDevice
 import com.scanner.d10r.hardware.util.isAutoCleanEditText
+import com.scanner.d10r.hardware.util.scanModule
 import com.scanner.d10r.hardware.util.setOnChange
 import com.scannerd.d10r.hardware.R
 import com.scannerd.d10r.hardware.databinding.ActivityStartBinding
@@ -29,7 +33,6 @@ class StartActivity : BaseActivity() {
         setContentView(binding.root)
         initViews()
         setOnChange { updateTv(it) }
-//        setSPChange { isImportConfig(it) }
         serviceIntent = Intent(this, Gh0stService::class.java)
         startForegroundService(serviceIntent)
         if (MyApplication.dao.selectData() >= 5000000) showToast(getString(R.string.clear_data))
@@ -64,22 +67,20 @@ class StartActivity : BaseActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.settings -> startActivity<SettingActivity>()
-//            R.id.symbologies -> {
-////                when (scanModule) {
-////                    Constants.DTHONEYWELLONE -> startActivity<HoneywellSigActivity>()
-////                    Constants.DTHONEYWELL -> startActivity<HoneywellQrActivity>()
-////                    Constants.DTMoToSE655 -> startActivity<MotoSigActivity>()
-////                    Constants.DTMoTOSE2707 -> startActivity<MotoQrActivity2707>()
-////                    Constants.DTTotinfo -> startActivity<TotinfoActivity>()
-////                    Constants.DTNewland -> startActivity<NewlandActivity>()
-////                    else -> showToast("未知模块 $scanModule")
-////                }
-//            }
-//
-//            R.id.about -> startActivity<com.scanner.d10r.hardware.AboutActivity>()
-//            R.id.module_setting -> startActivity<ChooseScannerActivity>()
-//            R.id.data -> startActivity<DataActivity>()
+            R.id.settings -> {
+                if (checkUsbDevice(6690, 7851)) startActivity<SettingActivity>()
+                else showToast("设备未接入，请检查扫码设备连接状况后，再次尝试。")
+            }
+            R.id.symbologies -> {
+                if (checkUsbDevice(6690, 7851)) {
+                    when (scanModule) {
+                        hr22p -> startActivity<SymbologyHrNewLandActivity>()
+                    }
+                } else showToast("设备未接入，请检查扫码设备连接状况后，再次尝试。")
+            }
+            R.id.about -> startActivity<AboutActivity>()
+            R.id.module_setting -> startActivity<ChooseScannerActivity>()
+            R.id.data -> startActivity<DataActivity>()
         }
         return super.onOptionsItemSelected(item)
     }

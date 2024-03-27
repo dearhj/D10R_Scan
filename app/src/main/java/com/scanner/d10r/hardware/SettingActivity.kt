@@ -65,6 +65,7 @@ import java.io.File
 
 class SettingActivity : BaseBackActivity() {
     private lateinit var binding: ActivitySettingBinding
+    private var activityFlag = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingBinding.inflate(layoutInflater)
@@ -74,8 +75,21 @@ class SettingActivity : BaseBackActivity() {
 
         initData()
         setOnChangeUsb {
-            Handler(Looper.getMainLooper()).postDelayed({ finish() }, 1000)
+            if (activityFlag) {
+                showToast("状态获取异常，请先停止扫码或检查扫描器连接状态，页面即将关闭！")
+                Handler(Looper.getMainLooper()).postDelayed({ finish() }, 1000)
+            }
         }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        activityFlag = false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activityFlag = true
     }
 
     private fun initData1() {
@@ -116,9 +130,7 @@ class SettingActivity : BaseBackActivity() {
                         binding.sbStartVoice.isChecked = isStartVoice
                     }
                     isScanModel = ds.getConfig("SCNMOD*")
-                    val reScanTimeStatus = ds.getConfig("RRDENA*").contains("1")
-                    reScanTime = if (!reScanTimeStatus) "0"
-                    else ds.getConfig("RRDDUR*").substring(6)
+                    reScanTime = ds.getConfig("RRDDUR*").substring(6)
                     oneScanOverTime = ds.getConfig("ORTSET*").substring(6)
                     scanSp = ds.getConfig("EXPLVL*")
                     voiceValue = ds.getConfig("GRBVLL*")
@@ -180,6 +192,9 @@ class SettingActivity : BaseBackActivity() {
                 if (!ds.setConfig("@FACDEF")) {
                     showToast(getString(R.string.TextConfigErr))
                 } else {
+                    //重读延迟打开100ms
+                    ds.setConfig("@RRDENA1")
+                    ds.setConfig("@RRDDUR100")
                     if (!isEnable) {
                         ds.setConfig("@SCNENA1")
                     } //这里很奇怪，恢复出厂设置时，没有办法将启用扫码恢复，这里只能手动恢复。
@@ -193,42 +208,30 @@ class SettingActivity : BaseBackActivity() {
 
         binding.rlReScan.setOnClickListener {
             val select = when (reScanTime) {
-                "0" -> 0
-                "100" -> 1
-                "200" -> 2
-                "500" -> 3
-                "1000" -> 4
-                "2000" -> 5
-                "5000" -> 6
+                "100" -> 0
+                "200" -> 1
+                "500" -> 2
+                "1000" -> 3
+                "2000" -> 4
+                "5000" -> 5
                 else -> 0
             }
             val list = arrayOf(
-                getString(R.string.close), "100ms", "200ms", "500ms", "1000ms", "2000ms", "5000ms"
+                "100ms", "200ms", "500ms", "1000ms", "2000ms", "5000ms"
             )
             choseSingleDialog(this, getString(R.string.re_scan_mode), list, select) { _, witch ->
                 val model = when (witch) {
-                    0 -> "@RRDENA0"
-                    1 -> "@RRDDUR100"
-                    2 -> "@RRDDUR200"
-                    3 -> "@RRDDUR500"
-                    4 -> "@RRDDUR1000"
-                    5 -> "@RRDDUR2000"
-                    6 -> "@RRDDUR5000"
-                    else -> "@RRDENA0"
+                    0 -> "@RRDDUR100"
+                    1 -> "@RRDDUR200"
+                    2 -> "@RRDDUR500"
+                    3 -> "@RRDDUR1000"
+                    4 -> "@RRDDUR2000"
+                    5 -> "@RRDDUR5000"
+                    else -> "@RRDDUR100"
                 }
                 reScanTime = model.substring(7)
-                if (witch == 0) {
-                    if (!ds.setConfig(model)) {
-                        showToast(getString(R.string.TextConfigErr))
-                    }
-                } else {
-                    if (!ds.setConfig("@RRDENA1")) {
-                        showToast(getString(R.string.TextConfigErr))
-                    } else {
-                        if (!ds.setConfig(model)) {
-                            showToast(getString(R.string.TextConfigErr))
-                        }
-                    }
+                if (!ds.setConfig(model)) {
+                    showToast(getString(R.string.TextConfigErr))
                 }
             }
         }
@@ -410,7 +413,7 @@ class SettingActivity : BaseBackActivity() {
         binding.sbVoice.isChecked = isScanVoice
         binding.sbStartVoice.isChecked = isStartVoice
         isScanModel = "SCNMOD0"
-        reScanTime = "0"
+        reScanTime = "100"
         oneScanOverTime = "3000"
         scanSp = "EXPLVL0"
         voiceValue = "GRBVLL20"
@@ -495,16 +498,7 @@ class SettingActivity : BaseBackActivity() {
                     importConfig(context = this,
                         data = result,
                         importScan = { list ->
-                            list.forEach { item ->
-                                if (item.key == ConfigEnum.ReTime.name) {
-                                    if (item.value == "0") ds.setConfig("@RRDENA0")
-                                    else {
-                                        if (ds.setConfig("@RRDENA1")) {
-                                            ds.setConfig("@RRDDUR${item.value}")
-                                        }
-                                    }
-                                } else ds.setConfig(item.value)
-                            }
+                            list.forEach { item -> ds.setConfig(item.value) }
                         },
                         success = { showToast(getString(R.string.import_success)) },
                         error = { showToast(getString(R.string.import_failed)) })
@@ -537,7 +531,7 @@ class SettingActivity : BaseBackActivity() {
                         )
                     )
                     list.add(Pair(ConfigEnum.ScanModel.name, "@$isScanModel"))
-                    list.add(Pair(ConfigEnum.ReTime.name, reScanTime))
+                    list.add(Pair(ConfigEnum.ReTime.name, "@RRDDUR$reScanTime"))
                     list.add(Pair(ConfigEnum.OneTime.name, "@ORTSET$oneScanOverTime"))
                     list.add(Pair(ConfigEnum.ScanSp.name, "@$scanSp"))
                     list.add(Pair(ConfigEnum.VoiceValue.name, "@$voiceValue"))

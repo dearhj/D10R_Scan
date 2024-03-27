@@ -16,14 +16,14 @@ import com.scannerd.d10r.hardware.databinding.ActivityRecyclerviewBinding
 import java.io.File
 
 class DataActivity : BaseBackActivity() {
-    private lateinit var viewModel: com.scanner.d10r.hardware.expandable.LoadMoreViewModel
+    private lateinit var viewModel: LoadMoreViewModel
     private lateinit var normalDialog: AlertDialog.Builder
     private lateinit var binding: ActivityRecyclerviewBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRecyclerviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        viewModel = ViewModelProvider(this)[com.scanner.d10r.hardware.expandable.LoadMoreViewModel::class.java]
+        viewModel = ViewModelProvider(this)[LoadMoreViewModel::class.java]
         MyApplication.dao.observeDataChange().observe(this) {
             title = "${getString(R.string.scanner_result)}(${MyApplication.dao.selectData()})"
         }

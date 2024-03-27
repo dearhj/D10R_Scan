@@ -42,7 +42,6 @@ import com.scanner.d10r.hardware.util.deleteSuffixChar
 import com.scanner.d10r.hardware.util.deviceChange
 import com.scanner.d10r.hardware.util.isAutoCleanEditText
 import com.scanner.d10r.hardware.util.isClipBoardChoose
-import com.scanner.d10r.hardware.util.isDebug
 import com.scanner.d10r.hardware.util.isFilterSpace
 import com.scanner.d10r.hardware.util.isHIDChoose
 import com.scanner.d10r.hardware.util.isOurApp
@@ -70,6 +69,7 @@ class UsbScanService : LifecycleService() {
         val ds: NLDeviceStream = NLDevice(NLDeviceStream.DevClass.DEV_COMPOSITE)
         var usbOpenChecked = false
     }
+
     private var deviceFlag = false
 
     @SuppressLint("ForegroundServiceType")
@@ -122,8 +122,14 @@ class UsbScanService : LifecycleService() {
                 usbOpenChecked = false
                 return
             }
-            println("设备打开")
             usbOpenChecked = true
+            //默认打开重读延迟100ms
+            val reScanTimeStatusOff = ds.getConfig("RRDENA*").contains("0")
+            println("设备打开   $reScanTimeStatusOff")
+            if (reScanTimeStatusOff) {
+                ds.setConfig("@RRDENA1")
+                ds.setConfig("@RRDDUR100")
+            }
         }
     }
 
@@ -239,8 +245,7 @@ class UsbScanService : LifecycleService() {
 
     private val saveRunnable = Runnable { insertData() }
     private fun insertData() {
-        val userName = if (isDebug()) userManager?.userName + ":" else ""
-        MyApplication.dao.insertData(ScannerData(0, userName + scannerData))
+        MyApplication.dao.insertData(ScannerData(0, scannerData ?: ""))
     }
 
     override fun onDestroy() {

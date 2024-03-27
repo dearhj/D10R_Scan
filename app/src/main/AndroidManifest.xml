@@ -94,6 +94,13 @@
             android:label="@string/scanner_result"
             android:launchMode="singleTask"
             tools:ignore="Instantiatable" />
+        <activity
+            android:name="com.scanner.d10r.hardware.symbology.SymbologyHrNewLandActivity"
+            android:configChanges="orientation|screenSize"
+            android:exported="true"
+            android:label="@string/symbologies"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

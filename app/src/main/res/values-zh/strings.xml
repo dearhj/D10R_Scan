@@ -272,10 +272,11 @@
     <string name="scan_voice_l">小</string>
     <string name="scan_voice_m">中</string>
     <string name="scan_voice_h">大</string>
-    <string name="TextConfigErr">配置错误</string>
+    <string name="TextConfigErr">配置错误，请重试！</string>
     <string name="open">开启</string>
     <string name="TextSenseMode">感应扫描模式</string>
     <string name="TextContinuousMode">连续扫描模式</string>
     <string name="TextLevelTriggerMode">电平触发模式</string>
     <string name="TextPulseMode">脉冲模式</string>
+    <string name="resetSymbology">确认恢复此码制？</string>
 </resources>

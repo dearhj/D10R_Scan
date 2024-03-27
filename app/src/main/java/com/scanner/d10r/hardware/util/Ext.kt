@@ -3,21 +3,13 @@ package com.scanner.d10r.hardware.util
 import android.content.Context
 import android.content.Intent
 import android.hardware.usb.UsbManager
-import android.os.Handler
-import android.os.Looper
 import android.text.TextUtils
 import android.util.Xml
-import android.view.KeyEvent
-import com.github.h4de5ing.base.add
-import com.github.h4de5ing.base.toHexString
-import com.github.h4de5ing.base.write
 import com.github.h4de5ing.baseui.interfaces.Change
 import com.github.h4de5ing.baseui.logD
 import com.github.h4de5ing.baseui.logE
 import com.scanner.d10r.hardware.MyApplication
 import com.scanner.d10r.hardware.MyApplication.Companion.mContext
-import com.scanner.d10r.hardware.barcodeservice.UsbScanService
-import com.scanner.d10r.hardware.bean.Constants
 import com.scanner.d10r.hardware.bean.KeyValue
 import com.scanner.d10r.hardware.db.Config
 import com.scanner.d10r.hardware.enums.ConfigEnum
@@ -31,7 +23,6 @@ import kotlinx.serialization.json.Json
 import org.xmlpull.v1.XmlPullParser
 import java.io.File
 import java.io.FileInputStream
-import java.lang.Boolean.parseBoolean
 import java.util.Timer
 import java.util.TimerTask
 import kotlin.properties.Delegates
@@ -39,7 +30,7 @@ import kotlin.properties.Delegates
 var voiceValue = "GRBVLL20"   //解码提示音音量
 
 var oneScanOverTime = "3000"   //一次读码超时时间
-var reScanTime = "0"   //重读延迟
+var reScanTime = "100"   //重读延迟
 
 //EXPLVL0 普通模式
 //EXPLVL2 屏幕模式

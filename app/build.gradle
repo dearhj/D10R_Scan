@@ -20,8 +20,8 @@ android {
         applicationId "com.scanner.d10r.hardware"
         minSdk 26
         targetSdk 34
-        versionCode 50308
-        versionName "5.3.8" //大版本.小功能.bugfix
+        versionCode 101
+        versionName "1.0.1" //大版本.小功能.bugfix
         multiDexEnabled true
         flavorDimensions = ["UpdateCode"]
         buildConfigField "long", "BUILD_TIME", System.currentTimeMillis() + "L"
