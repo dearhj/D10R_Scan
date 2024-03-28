@@ -61,15 +61,6 @@ open class BaseActivity : AppCompatActivity() {
                     startActivity(this)
                 }
             }, 1000)
-            if(scanModule == 6) {
-//                MainScope().launch(Dispatchers.IO) {
-//                    delay(1000)
-//                    send2Newland("INTERF0")//设置通信接口类型RS-232
-//                    delayed(10) { send2Newland("ORTSET10000") }//超时10S
-//                    delay(50)
-//                    send2Newland("ALLINV1") //默认打开反相扫码。
-//                }
-            }
         } catch (e: Exception) {
             "重启失败".logE()
             e.printStackTrace()

@@ -8,6 +8,7 @@ import com.android.otalibrary.isLicense
 import com.android.otalibrary.showLicense
 import com.github.h4de5ing.baseui.selected
 import com.scanner.d10r.hardware.base.BaseBackActivity
+import com.scanner.d10r.hardware.bean.Constants.em3100
 import com.scanner.d10r.hardware.bean.Constants.hr22p
 import com.scanner.d10r.hardware.enums.ConfigEnum
 import com.scanner.d10r.hardware.util.filterModuleIndex
@@ -27,7 +28,7 @@ class ChooseScannerActivity : BaseBackActivity() {
         setContentView(binding.root)
         list = listOf(
             Pair(hr22p, getString(R.string.hr22p)),
-            Pair(hr22p, getString(R.string.hr22p))
+            Pair(em3100, getString(R.string.em3100))
         )
         binding.btnSure.setOnClickListener { showDialog() }
         mPosition = filterModuleIndex(scanModule)
@@ -51,7 +52,6 @@ class ChooseScannerActivity : BaseBackActivity() {
         dialog.setMessage(getString(R.string.sure_module_contents))
         dialog.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.sure)) { dialog1, _ ->
             setIsFirstOpen(false)
-            showToast(getString(R.string.set_module))
             dialog1.dismiss()
             startActivity<StartActivity>()
             finish()

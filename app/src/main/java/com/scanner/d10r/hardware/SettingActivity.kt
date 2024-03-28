@@ -199,7 +199,7 @@ class SettingActivity : BaseBackActivity() {
                         ds.setConfig("@SCNENA1")
                     } //这里很奇怪，恢复出厂设置时，没有办法将启用扫码恢复，这里只能手动恢复。
                     reViewAfterReset()
-                    MyApplication.dao.deleteAllConfig()
+                    rereadConfigurationItems()
                     firstUpdate(MyApplication.dao.selectAllConfig())
                     initData1()
                 }

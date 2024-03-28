@@ -36,11 +36,11 @@ class MyApplication : MultiDexApplication() {
         mContext = this
         database = create(this)
         dao = database.barcodeDao()
-//        val isFirst = sp.getBoolean("isFirst", true)
-//        if (isFirst) {
-//            setIsFirstOpen(false)
-//            parserXML(File(Constants.configPath))
-//        }
+        val isFirst = sp.getBoolean("isFirst", true)
+        if (isFirst) {
+            setIsFirstOpen(false)
+            parserXML(File(Constants.configPath))
+        }
         firstUpdate(dao.selectAllConfig())
     }
 

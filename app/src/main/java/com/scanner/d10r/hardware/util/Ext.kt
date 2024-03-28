@@ -44,7 +44,7 @@ var aimLight = "AMLENA1"   //瞄准灯
 //ILLSCN0  关闭
 var externalLighting = "ILLSCN1"    //外部照明灯
 
-var model = ""  //模块
+var model = ""  //设备型号
 
 //SCNMOD0 电平触发
 //SCNMOD2 感应模式
@@ -133,6 +133,7 @@ fun firstUpdate(data: List<Config>) {
     configs.clear()
     configs.addAll(data)
     model = configs.firstOrNull { it.key == ConfigEnum.model.name }?.value.toString()
+    scanModule = configs.firstOrNull { it.key == ConfigEnum.ScanModule.name }?.value?.toInt() ?: 0
     isReplaceInvisibleChar =
         configs.firstOrNull { it.key == ConfigEnum.ReplaceInvisibleChar.name }?.value?.toBoolean()
             ?: false
@@ -339,8 +340,6 @@ fun updateOneConfig(key: String, value: String) {
 fun setIsFirstOpen(isFirst: Boolean) =
     MyApplication.sp.edit().putBoolean("isFirst", isFirst).apply()
 
-//过滤不要的字段
-val blockList = listOf("ReaderID", "ScreenDirection", "SerialPortSwitch", "openService_reboot")
 fun parserXML(file: File) {
     val configs = mutableListOf<Config>()
     try {
@@ -354,15 +353,9 @@ fun parserXML(file: File) {
                 XmlPullParser.START_DOCUMENT -> {}
                 XmlPullParser.START_TAG -> if (name.equals("property", ignoreCase = true)) {
                     val key = xml.getAttributeValue(0)
-                    var value = xml.getAttributeValue(1)
+                    val value = xml.getAttributeValue(1)
                     "xml解析数据 $key=$value".logD()
-                    if (key !in blockList) {
-                        when (key) {
-                            "HIDChoose" -> value = "false"
-                            "WidgetChoose" -> value = "true"
-                        }
-                        configs.add(Config(0, key, value))
-                    }
+                    configs.add(Config(0, key, value))
                 }
 
                 XmlPullParser.END_TAG -> {}

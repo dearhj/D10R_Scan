@@ -84,5 +84,8 @@ enum class ConfigEnum {
     OneTime,
 
     //重读延迟
-    ReTime
+    ReTime,
+
+    //扫描模块
+    ScanModule
 }
