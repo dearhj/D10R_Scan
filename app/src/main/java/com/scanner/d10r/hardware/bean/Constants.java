@@ -4,5 +4,5 @@ public class Constants {
     //0 索引表示默认没有值
     public static final int hr22p = 1;  //新大陆扫描手柄
     public static final int em3100 = 2;  //新大陆扫描模块
-    public static final String configPath = "vendor/etc/scanner_config.xml";
+    public static final String configPath = "vendor/etc/scanner_config_usb.xml";
 }

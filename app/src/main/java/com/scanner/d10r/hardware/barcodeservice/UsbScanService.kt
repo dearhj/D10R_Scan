@@ -33,7 +33,6 @@ import com.scanner.d10r.hardware.util.actionSettings
 import com.scanner.d10r.hardware.util.addPrefix
 import com.scanner.d10r.hardware.util.addSuffix
 import com.scanner.d10r.hardware.util.characterMode
-import com.scanner.d10r.hardware.util.checkUsbDevice
 import com.scanner.d10r.hardware.util.dataEncoding
 import com.scanner.d10r.hardware.util.deletePrefix
 import com.scanner.d10r.hardware.util.deletePrefixChar
@@ -53,6 +52,7 @@ import com.scanner.d10r.hardware.util.replaceInvisibleChar
 import com.scanner.d10r.hardware.util.resultChange
 import com.scanner.d10r.hardware.util.scanModule
 import com.scanner.d10r.hardware.util.sendDateToUser
+import com.scanner.d10r.hardware.util.setSPChange
 import com.scannerd.d10r.hardware.R
 import java.nio.charset.Charset
 
@@ -93,11 +93,16 @@ class UsbScanService : LifecycleService() {
         startForeground(1, notification)
 
         register()
-        onOpenDevice()
+        if (scanModule == 1 || scanModule == 2) onOpenDevice()
         clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
         mKeyguardManager = getSystemService(KEYGUARD_SERVICE) as KeyguardManager
         powerManager = getSystemService(POWER_SERVICE) as PowerManager
         userManager = getSystemService(USER_SERVICE) as UserManager
+
+        //监听到模块改变了
+        setSPChange {
+            println("模块改变了，，，  $it")
+        }
     }
 
     private fun onOpenDevice() {
@@ -160,7 +165,7 @@ class UsbScanService : LifecycleService() {
                         val device =
                             intent.getParcelableExtra(UsbManager.EXTRA_DEVICE) as UsbDevice?
                         if (device != null) {
-                            if (device.vendorId == 7851 && device.productId == 6690) {
+                            if (device.vendorId == 7851 && (device.productId == 6690 || device.productId == 34) && (scanModule == 1 || scanModule == 2)) {
                                 onOpenDevice()
                                 deviceFlag = false
                             }
@@ -168,11 +173,15 @@ class UsbScanService : LifecycleService() {
                     }
 
                     UsbManager.ACTION_USB_DEVICE_DETACHED -> {
-                        if (!checkUsbDevice(6690, 7851)) {
-                            if (!deviceFlag) deviceChange =
-                                System.currentTimeMillis().toString() //通知设备已经被拔出
-                            deviceFlag = true
-                            onCloseDevice()
+                        val device =
+                            intent.getParcelableExtra(UsbManager.EXTRA_DEVICE) as UsbDevice?
+                        if (scanModule != 3 && (device != null)) {
+                            if (device.vendorId == 7851 && (device.productId == 6690 || device.productId == 34)) {
+                                if (!deviceFlag) deviceChange =
+                                    System.currentTimeMillis().toString() //通知设备已经被拔出
+                                deviceFlag = true
+                                onCloseDevice()
+                            }
                         }
                     }
 

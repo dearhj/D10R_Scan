@@ -13,6 +13,7 @@ import com.android.otalibrary.isLicense
 import com.android.otalibrary.showLicense
 import com.scanner.d10r.hardware.barcodeservice.Gh0stService
 import com.scanner.d10r.hardware.base.BaseActivity
+import com.scanner.d10r.hardware.bean.Constants.em3100
 import com.scanner.d10r.hardware.bean.Constants.hr22p
 import com.scanner.d10r.hardware.symbology.SymbologyHrNewLandActivity
 import com.scanner.d10r.hardware.util.checkUsbDevice
@@ -68,16 +69,28 @@ class StartActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.settings -> {
-                if (checkUsbDevice(6690, 7851)) startActivity<SettingActivity>()
-                else showToast("设备未接入，请检查扫码设备连接状况后，再次尝试。")
+                if (scanModule == 1) {
+                    if (checkUsbDevice(6690, 7851)) startActivity<SettingActivity>()
+                    else showToast("设备未接入，请检查扫码设备连接状况后，再次尝试。")
+                } else if (scanModule == 2) {
+                    if (checkUsbDevice(34, 7851)) startActivity<SettingActivity>()
+                    else showToast("设备未接入，请检查扫码设备连接状况后，再次尝试。")
+                }
             }
+
             R.id.symbologies -> {
-                if (checkUsbDevice(6690, 7851)) {
-                    when (scanModule) {
-                        hr22p -> startActivity<SymbologyHrNewLandActivity>()
+                when (scanModule) {
+                    hr22p -> {
+                        if (checkUsbDevice(6690, 7851)) startActivity<SymbologyHrNewLandActivity>()
+                        else showToast("设备未接入，请检查扫码设备连接状况后，再次尝试。")
                     }
-                } else showToast("设备未接入，请检查扫码设备连接状况后，再次尝试。")
+                    em3100 -> {
+                        if (checkUsbDevice(34, 7851)) startActivity<SymbologyHrNewLandActivity>()
+                        else showToast("设备未接入，请检查扫码设备连接状况后，再次尝试。")
+                    }
+                }
             }
+
             R.id.about -> startActivity<AboutActivity>()
             R.id.module_setting -> startActivity<ChooseScannerActivity>()
             R.id.data -> startActivity<DataActivity>()

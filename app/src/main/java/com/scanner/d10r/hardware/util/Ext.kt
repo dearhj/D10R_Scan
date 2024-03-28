@@ -206,7 +206,7 @@ fun setOnChange(onchange: ((String) -> Unit)) {
     }
 }
 
-//监听串口原始字符串，只用于扫码导入
+//监听模块选择
 private var changeSP: Change? = null
 var spChange: String by Delegates.observable("") { _, _, new ->
     changeSP?.change(new)
@@ -223,6 +223,7 @@ fun setSPChange(onchange: ((String) -> Unit)) {
 fun filterModuleIndex(deviceType: Int): Int {
     return when (deviceType) {
         com.scanner.d10r.hardware.bean.Constants.hr22p -> 0
+        com.scanner.d10r.hardware.bean.Constants.em3100 -> 1
         else -> 0
     }
 }

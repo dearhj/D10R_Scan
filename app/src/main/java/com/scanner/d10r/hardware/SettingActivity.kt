@@ -49,6 +49,7 @@ import com.scanner.d10r.hardware.util.isWidgetChoose
 import com.scanner.d10r.hardware.util.oneScanOverTime
 import com.scanner.d10r.hardware.util.parserXML
 import com.scanner.d10r.hardware.util.reScanTime
+import com.scanner.d10r.hardware.util.scanModule
 import com.scanner.d10r.hardware.util.scanSp
 import com.scanner.d10r.hardware.util.setIsFirstOpen
 import com.scanner.d10r.hardware.util.setOnChangeUsb
@@ -70,6 +71,7 @@ class SettingActivity : BaseBackActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        if(scanModule == 2) binding.rlScanPre.visibility = View.GONE
         initData1()
         initView1()
 
@@ -132,7 +134,7 @@ class SettingActivity : BaseBackActivity() {
                     isScanModel = ds.getConfig("SCNMOD*")
                     reScanTime = ds.getConfig("RRDDUR*").substring(6)
                     oneScanOverTime = ds.getConfig("ORTSET*").substring(6)
-                    scanSp = ds.getConfig("EXPLVL*")
+                    if (scanModule == 1) scanSp = ds.getConfig("EXPLVL*")
                     voiceValue = ds.getConfig("GRBVLL*")
                     aimLight = ds.getConfig("AMLENA*")
                     externalLighting = ds.getConfig("ILLSCN*")
@@ -237,19 +239,36 @@ class SettingActivity : BaseBackActivity() {
         }
         //扫描模式选择
         binding.rlChooseScanMode.setOnClickListener {
-            val select = when (isScanModel) {
-                "SCNMOD0" -> 0
-                "SCNMOD2" -> 1
-                "SCNMOD3" -> 2
-                "SCNMOD4" -> 3
-                else -> 0
+            val select = if (scanModule == 1) {
+                when (isScanModel) {
+                    "SCNMOD0" -> 0
+                    "SCNMOD2" -> 1
+                    "SCNMOD3" -> 2
+                    "SCNMOD4" -> 3
+                    else -> 0
+                }
+            } else {
+                when (isScanModel) {
+                    "SCNMOD0" -> 0
+                    "SCNMOD2" -> 1
+                    "SCNMOD3" -> 2
+                    else -> 0
+                }
             }
-            val list = arrayOf(
-                getString(R.string.TextLevelTriggerMode),
-                getString(R.string.TextSenseMode),
-                getString(R.string.TextContinuousMode),
-                getString(R.string.TextPulseMode),
-            )
+            val list = if (scanModule == 1) {
+                arrayOf(
+                    getString(R.string.TextLevelTriggerMode),
+                    getString(R.string.TextSenseMode),
+                    getString(R.string.TextContinuousMode),
+                    getString(R.string.TextPulseMode),
+                )
+            } else {
+                arrayOf(
+                    getString(R.string.TextLevelTriggerMode),
+                    getString(R.string.TextSenseMode),
+                    getString(R.string.TextContinuousMode)
+                )
+            }
             choseSingleDialog(
                 this, getString(R.string.scan_mode_choose), list, select
             ) { _, witch ->
@@ -533,7 +552,7 @@ class SettingActivity : BaseBackActivity() {
                     list.add(Pair(ConfigEnum.ScanModel.name, "@$isScanModel"))
                     list.add(Pair(ConfigEnum.ReTime.name, "@RRDDUR$reScanTime"))
                     list.add(Pair(ConfigEnum.OneTime.name, "@ORTSET$oneScanOverTime"))
-                    list.add(Pair(ConfigEnum.ScanSp.name, "@$scanSp"))
+                    if(scanModule == 1) list.add(Pair(ConfigEnum.ScanSp.name, "@$scanSp"))
                     list.add(Pair(ConfigEnum.VoiceValue.name, "@$voiceValue"))
                     list.add(Pair(ConfigEnum.AimLight.name, "@$aimLight"))
                     list.add(Pair(ConfigEnum.OutLight.name, "@$externalLighting"))
