@@ -213,11 +213,11 @@ class SettingActivity : BaseBackActivity() {
                 "500" -> 2
                 "1000" -> 3
                 "2000" -> 4
-                "5000" -> 5
+                "3000" -> 5
                 else -> 0
             }
             val list = arrayOf(
-                "100ms", "200ms", "500ms", "1000ms", "2000ms", "5000ms"
+                "100ms", "200ms", "500ms", "1000ms", "2000ms", "3000ms"
             )
             choseSingleDialog(this, getString(R.string.re_scan_mode), list, select) { _, witch ->
                 val model = when (witch) {
@@ -226,7 +226,7 @@ class SettingActivity : BaseBackActivity() {
                     2 -> "@RRDDUR500"
                     3 -> "@RRDDUR1000"
                     4 -> "@RRDDUR2000"
-                    5 -> "@RRDDUR5000"
+                    5 -> "@RRDDUR3000"
                     else -> "@RRDDUR100"
                 }
                 reScanTime = model.substring(7)
@@ -322,8 +322,8 @@ class SettingActivity : BaseBackActivity() {
             if (isScanVoice) {
                 val select = when (voiceValue) {
                     "GRBVLL20" -> 0
-                    "GRBVLL12" -> 1
-                    "GRBVLL5" -> 2
+                    "GRBVLL10" -> 1
+                    "GRBVLL2" -> 2
                     else -> 0
                 }
                 val list = arrayOf(
@@ -336,8 +336,8 @@ class SettingActivity : BaseBackActivity() {
                 ) { _, witch ->
                     val mode = when (witch) {
                         0 -> "@GRBVLL20"
-                        1 -> "@GRBVLL12"
-                        2 -> "@GRBVLL5"
+                        1 -> "@GRBVLL10"
+                        2 -> "@GRBVLL2"
                         else -> "@GRBVLL20"
                     }
                     voiceValue = mode.substring(1)
