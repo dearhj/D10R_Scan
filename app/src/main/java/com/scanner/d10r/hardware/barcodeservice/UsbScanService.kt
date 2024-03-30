@@ -128,12 +128,15 @@ class UsbScanService : LifecycleService() {
                 return
             }
             usbOpenChecked = true
-            //默认打开重读延迟100ms
-            val reScanTimeStatusOff = ds.getConfig("RRDENA*").contains("0")
-            println("设备打开   $reScanTimeStatusOff")
-            if (reScanTimeStatusOff) {
-                ds.setConfig("@RRDENA1")
-                ds.setConfig("@RRDDUR100")
+            try {
+                //默认打开重读延迟100ms
+                val reScanTimeStatusOff = ds.getConfig("RRDENA*").contains("0")
+                println("设备打开   $reScanTimeStatusOff")
+                if (reScanTimeStatusOff) {
+                    ds.setConfig("@RRDENA1")
+                    ds.setConfig("@RRDDUR100")
+                }
+            } catch (_: Exception){
             }
         }
     }
