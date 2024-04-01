@@ -78,7 +78,7 @@ class SettingActivity : BaseBackActivity() {
         initData()
         setOnChangeUsb {
             if (activityFlag) {
-                showToast("状态获取异常，请先停止扫码或检查扫描器连接状态，页面即将关闭！")
+                showToast(getString(R.string.connectError))
                 Handler(Looper.getMainLooper()).postDelayed({ finish() }, 1000)
             }
         }
@@ -141,7 +141,7 @@ class SettingActivity : BaseBackActivity() {
                     withContext(Dispatchers.Main) { initView() }
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    showToast("状态获取异常，请先停止扫码或检查扫描器连接状态，页面即将关闭！")
+                    showToast(getString(R.string.connectError))
                     Handler(Looper.getMainLooper()).postDelayed({ finish() }, 1000)
                 }
             }
@@ -364,7 +364,7 @@ class SettingActivity : BaseBackActivity() {
                         showToast(getString(R.string.TextConfigErr))
                     }
                 }
-            } else showToast("解码提示音已关闭")
+            } else showToast(getString(R.string.voice_off))
         }
 
         //瞄准灯设置

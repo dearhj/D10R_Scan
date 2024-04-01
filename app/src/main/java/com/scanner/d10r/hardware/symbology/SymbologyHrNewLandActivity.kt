@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.entity.node.BaseNode
 import com.scanner.d10r.hardware.base.BaseBackActivity
 import com.scanner.d10r.hardware.util.scanModule
 import com.scanner.d10r.hardware.util.setOnChangeUsb
+import com.scannerd.d10r.hardware.R
 import com.scannerd.d10r.hardware.databinding.ActivitySymbologyNewBinding
 
 class SymbologyHrNewLandActivity : BaseBackActivity() {
@@ -70,7 +71,7 @@ class SymbologyHrNewLandActivity : BaseBackActivity() {
         adapter.setList(list)
         setOnChangeUsb {
             if (activityFlag) {
-                showToast("扫描器与设备断开连接，页面即将关闭")
+                showToast(getString(R.string.activity_close))
                 Handler(Looper.getMainLooper()).postDelayed({ finish() }, 1000)
             }
         }

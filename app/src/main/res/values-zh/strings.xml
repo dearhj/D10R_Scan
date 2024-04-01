@@ -84,6 +84,7 @@
     <string name="motorola">摩托罗拉</string>
     <string name="hr22p">HR22+</string>
     <string name="em3100">EM3100</string>
+    <string name="me11">ME11</string>
     <string name="motoloraone">摩托罗拉一维</string>
     <string name="totinfo_scanner">图腾二维</string>
     <string name="newland_scanner">新大陆二维</string>
@@ -279,4 +280,8 @@
     <string name="TextLevelTriggerMode">电平触发模式</string>
     <string name="TextPulseMode">脉冲模式</string>
     <string name="resetSymbology">确认恢复此码制？</string>
+    <string name="checkConnect">设备未接入，请检查扫码设备连接状况后，再次尝试。</string>
+    <string name="connectError">通信异常，请先停止扫码或检查连接状态，页面将关闭！</string>
+    <string name="voice_off">解码提示音已关闭</string>
+    <string name="activity_close">扫描器与设备断开连接，页面将关闭</string>
 </resources>

@@ -85,6 +85,7 @@
     <string name="motorola">Motorola</string>
     <string name="hr22p">HR22+</string>
     <string name="em3100">EM3100</string>
+    <string name="me11">ME11</string>
     <string name="motoloraone">Motorola One dimensional</string>
     <string name="totinfo_scanner">Totinfo two dimensional</string>
     <string name="newland_scanner">Newland two dimensional</string>
@@ -192,7 +193,7 @@
     <string name="import_failed">import failed,try again reboot app</string>
     <string name="block_volume_keys">Block volume keys</string>
     <string name="enable_scan">Enable scanner</string>
-    <string name="enable_scan_summary">开启扫码功能(扫描器重新开机后将默认打开)</string>
+    <string name="enable_scan_summary">Enable scanning function (the scanner will be turned on by default after restarting)</string>
     <string name="song_shou_close">Press to scan until getting a result</string>
     <string name="continuous_close">Continuous scanning</string>
     <string name="Induction_close">Induction scanning</string>
@@ -261,25 +262,29 @@
     <string name="action">Action:</string>
     <string name="no_setting">Not Set</string>
 
-    <string name="sound_start_settings">开机提示音</string>
-    <string name="sound_start_settings_summary">扫码设备开机后响起提示音</string>
+    <string name="sound_start_settings">Power On Prompt Sound</string>
+    <string name="sound_start_settings_summary">After the scanning device is turned on, a prompt sound will sound</string>
 
-    <string name="re_scan_mode">重读延迟(相同条码)</string>
-    <string name="one_scan_timeout">一次读码超时时间</string>
-    <string name="scan_sp">识读偏好</string>
-    <string name="screen">屏幕模式</string>
-    <string name="normal">普通模式</string>
-    <string name="scan_voice_value">解码提示音音量</string>
-    <string name="light_bt">外部照明灯设置</string>
-    <string name="light_am">瞄准灯设置</string>
-    <string name="scan_voice_l">小</string>
-    <string name="scan_voice_m">中</string>
-    <string name="scan_voice_h">大</string>
-    <string name="TextConfigErr">配置错误</string>
-    <string name="open">开启</string>
-    <string name="TextSenseMode">感应扫描模式</string>
-    <string name="TextContinuousMode">连续扫描模式</string>
-    <string name="TextLevelTriggerMode">电平触发模式</string>
-    <string name="TextPulseMode">脉冲模式</string>
-    <string name="resetSymbology">确认恢复此码制？</string>
+    <string name="re_scan_mode">Rereading Delay(same barcode)</string>
+    <string name="one_scan_timeout">One Time Code Reading Timeout</string>
+    <string name="scan_sp">Reading Preferences</string>
+    <string name="screen">Screen mode</string>
+    <string name="normal">Normal mode</string>
+    <string name="scan_voice_value">Decoding Prompt Volume</string>
+    <string name="light_bt">External Light Setting</string>
+    <string name="light_am">Aiming Light Setting</string>
+    <string name="scan_voice_l">Low</string>
+    <string name="scan_voice_m">Medium</string>
+    <string name="scan_voice_h">High</string>
+    <string name="TextConfigErr">Configuration error</string>
+    <string name="open">Open</string>
+    <string name="TextSenseMode">Induction scanning mode</string>
+    <string name="TextContinuousMode">Continuous scanning mode</string>
+    <string name="TextLevelTriggerMode">Level trigger mode</string>
+    <string name="TextPulseMode">Pulse mode</string>
+    <string name="resetSymbology">Are you sure to restore this code system?</string>
+    <string name="checkConnect">The device is not connected. Please check the connection status of the scanning device and try again.</string>
+    <string name="connectError">Communication abnormal, please stop scanning or check the connection status first, the page will close!</string>
+    <string name="voice_off">Decoding prompt sound has been turned off</string>
+    <string name="activity_close">The scanner is disconnected from the device and the page will close</string>
 </resources>

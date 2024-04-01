@@ -71,10 +71,10 @@ class StartActivity : BaseActivity() {
             R.id.settings -> {
                 if (scanModule == 1) {
                     if (checkUsbDevice(6690, 7851)) startActivity<SettingActivity>()
-                    else showToast("设备未接入，请检查扫码设备连接状况后，再次尝试。")
+                    else showToast(getString(R.string.checkConnect))
                 } else if (scanModule == 2) {
                     if (checkUsbDevice(34, 7851)) startActivity<SettingActivity>()
-                    else showToast("设备未接入，请检查扫码设备连接状况后，再次尝试。")
+                    else showToast(getString(R.string.checkConnect))
                 }
             }
 
@@ -82,11 +82,11 @@ class StartActivity : BaseActivity() {
                 when (scanModule) {
                     hr22p -> {
                         if (checkUsbDevice(6690, 7851)) startActivity<SymbologyHrNewLandActivity>()
-                        else showToast("设备未接入，请检查扫码设备连接状况后，再次尝试。")
+                        else showToast(getString(R.string.checkConnect))
                     }
                     em3100 -> {
                         if (checkUsbDevice(34, 7851)) startActivity<SymbologyHrNewLandActivity>()
-                        else showToast("设备未接入，请检查扫码设备连接状况后，再次尝试。")
+                        else showToast(getString(R.string.checkConnect))
                     }
                 }
             }
