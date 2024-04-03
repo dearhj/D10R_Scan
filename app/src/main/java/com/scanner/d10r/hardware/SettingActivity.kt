@@ -728,6 +728,7 @@ class SettingActivity : BaseBackActivity() {
                     HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_FFFF"))
                     //修改连续识读模式识读间隔0ms
                     HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_MARR000"))
+                    MyApplication.dao.delAllSymbologyData()
                     rereadConfigurationItems()
                     firstUpdate(MyApplication.dao.selectAllConfig())
                     initData1()

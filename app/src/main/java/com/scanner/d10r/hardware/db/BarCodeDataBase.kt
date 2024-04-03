@@ -6,8 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [Config::class,ScannerData::class],
-    version = 7,
+    entities = [Config::class, ScannerData::class, ME11SymbologyData::class],
+    version = 8,
     exportSchema = false
 )
 abstract class BarCodeDataBase : RoomDatabase() {

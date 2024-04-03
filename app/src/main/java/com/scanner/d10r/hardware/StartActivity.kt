@@ -93,7 +93,7 @@ class StartActivity : BaseActivity() {
                         else showToast(getString(R.string.checkConnect))
                     }
                     me11 -> {
-                        if (checkUsbDevice(34819, 9969)) startActivity<SettingActivity>()
+                        if (checkUsbDevice(34819, 9969)) startActivity<SymbologyHrNewLandActivity>()
                         else showToast(getString(R.string.checkConnect))
                     }
                 }

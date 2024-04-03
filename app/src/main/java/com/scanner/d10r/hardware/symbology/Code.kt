@@ -1973,3 +1973,508 @@ fun getAllEM3100Config(): MutableList<CodeObj> {
         )
     )
 }
+
+//ME11 扫描模块
+fun getAllME11Config(): MutableList<CodeObj> {
+    return mutableListOf(
+        CodeObj(
+            "Code 128",
+            listOf(
+                CodeFunction(
+                    "Enable/Disable",
+                    "Code 128",
+                    mutableListOf("Enable", "Disable"),
+                    mutableListOf("C_CMD_2801", "C_CMD_2800")
+                ),
+                CodeFunction(
+                    "Minimum Length 0f Code Reading",
+                    CodeLength(
+                        "Code 128",
+                        1,
+                        255,
+                        1,
+                        "Minimum Length 0f Code Reading",
+                        "C_CMD_280A"
+                    )
+                ),
+                CodeFunction(
+                    "Maximum Length 0f Code Reading",
+                    CodeLength(
+                        "Code 128",
+                        1,
+                        255,
+                        1,
+                        "Maximum Length 0f Code Reading",
+                        "C_CMD_280B"
+                    )
+                )
+
+            )
+        ),
+        CodeObj(
+            "EAN-8",
+            listOf(
+                CodeFunction(
+                    "Enable/Disable",
+                    "EAN-8",
+                    mutableListOf("Enable", "Disable"),
+                    mutableListOf("C_CMD_0801", "C_CMD_0800")
+                ),
+                CodeFunction(
+                    "Transmit Check Character",
+                    "EAN-8",
+                    mutableListOf("Don’t Transmit", "Transmit"),
+                    mutableListOf("C_CMD_0802", "C_CMD_0803")
+                ),
+                CodeFunction(
+                    "2 Digit Addenda",
+                    "EAN-8",
+                    mutableListOf("2 Digit Addenda Off", "2 Digit Addenda On"),
+                    mutableListOf("C_CMD_0820", "C_CMD_0821")
+                ),
+                CodeFunction(
+                    "5 Digit Addenda",
+                    "EAN-8",
+                    mutableListOf("5 Digit Addenda Off", "5 Digit Addenda On"),
+                    mutableListOf("C_CMD_0850", "C_CMD_0851")
+                )
+            )
+        ),
+        CodeObj(
+            "EAN-13",
+            listOf(
+                CodeFunction(
+                    "Enable/Disable",
+                    "EAN-13",
+                    mutableListOf("Enable", "Disable"),
+                    mutableListOf("C_CMD_1301", "C_CMD_1300")
+                ),
+                CodeFunction(
+                    "Transmit Check Character",
+                    "EAN-13",
+                    mutableListOf("Don’t Transmit", "Transmit"),
+                    mutableListOf("C_CMD_1302", "C_CMD_1303")
+                ),
+                CodeFunction(
+                    "2 Digit Addenda",
+                    "EAN-13",
+                    mutableListOf("2 Digit Addenda Off", "2 Digit Addenda On"),
+                    mutableListOf("C_CMD_1320", "C_CMD_1321")
+                ),
+                CodeFunction(
+                    "5 Digit Addenda",
+                    "EAN-13",
+                    mutableListOf("5 Digit Addenda Off", "5 Digit Addenda On"),
+                    mutableListOf("C_CMD_1350", "C_CMD_1351")
+                )
+            )
+        ),
+        CodeObj(
+            "UPC-E0",
+            listOf(
+                CodeFunction(
+                    "Enable/Disable",
+                    "UPC-E0",
+                    mutableListOf("Enable", "Disable"),
+                    mutableListOf("C_CMD_E001", "C_CMD_E000")
+                ),
+                CodeFunction(
+                    "Transmit Check Character",
+                    "UPC-E0",
+                    mutableListOf("Don’t Transmit", "Transmit"),
+                    mutableListOf("C_CMD_E002", "C_CMD_E003")
+                ),
+                CodeFunction(
+                    "Output System Characters",
+                    "UPC-E0",
+                    mutableListOf("Do not output", "Output"),
+                    mutableListOf("C_CMD_E004", "C_CMD_E005")
+                )
+            )
+        ),
+        CodeObj(
+            "UPC-E1",
+            listOf(
+                CodeFunction(
+                    "Enable/Disable",
+                    "UPC-E1",
+                    mutableListOf("Enable", "Disable"),
+                    mutableListOf("C_CMD_E101", "C_CMD_E100")
+                ),
+                CodeFunction(
+                    "Transmit Check Character",
+                    "UPC-E1",
+                    mutableListOf("Don’t Transmit", "Transmit"),
+                    mutableListOf("C_CMD_E102", "C_CMD_E103")
+                ),
+                CodeFunction(
+                    "2 Digit Addenda",
+                    "UPC-E1",
+                    mutableListOf("2 Digit Addenda Off", "2 Digit Addenda On"),
+                    mutableListOf("C_CMD_E120", "C_CMD_E121")
+                ),
+                CodeFunction(
+                    "5 Digit Addenda",
+                    "UPC-E1",
+                    mutableListOf("5 Digit Addenda Off", "5 Digit Addenda On"),
+                    mutableListOf("C_CMD_E150", "C_CMD_E151")
+                ),
+                CodeFunction(
+                    "Output System Characters",
+                    "UPC-E1",
+                    mutableListOf("Do not output", "Output"),
+                    mutableListOf("C_CMD_E104", "C_CMD_E105")
+                )
+            )
+        ),
+        CodeObj(
+            "UPC-A",
+            listOf(
+                CodeFunction(
+                    "Enable/Disable",
+                    "UPC-A",
+                    mutableListOf("Enable", "Disable"),
+                    mutableListOf("C_CMD_CA01", "C_CMD_CA00")
+                ),
+                CodeFunction(
+                    "Transmit Check Character",
+                    "UPC-A",
+                    mutableListOf("Don’t Transmit", "Transmit"),
+                    mutableListOf("C_CMD_CA02", "C_CMD_CA03")
+                ),
+                CodeFunction(
+                    "2 Digit Addenda",
+                    "UPC-A",
+                    mutableListOf("2 Digit Addenda Off", "2 Digit Addenda On"),
+                    mutableListOf("C_CMD_CA20", "C_CMD_CA21")
+                ),
+                CodeFunction(
+                    "5 Digit Addenda",
+                    "UPC-A",
+                    mutableListOf("5 Digit Addenda Off", "5 Digit Addenda On"),
+                    mutableListOf("C_CMD_CA50", "C_CMD_CA51")
+                ),
+                CodeFunction(
+                    "Output System Characters",
+                    "UPC-A",
+                    mutableListOf("Do not output", "Output"),
+                    mutableListOf("C_CMD_CA04", "C_CMD_CA05")
+                )
+            )
+        ),
+        CodeObj(
+            "Interleaved 2 of 5",
+            listOf(
+                CodeFunction(
+                    "Enable/Disable",
+                    "Interleaved 2 of 5",
+                    mutableListOf("Enable", "Disable"),
+                    mutableListOf("C_CMD_IT01", "C_CMD_IT00")
+                ),
+                CodeFunction(
+                    "Check Character",
+                    "Interleaved 2 of 5",
+                    mutableListOf(
+                        "Off",
+                        "USS On,Don’t Transmit",
+                        "USS On,Transmit",
+                        "OPCC On,Don’t Transmit",
+                        "OPCC On,Transmit"
+                    ),
+                    mutableListOf(
+                        "C_CMD_IT02",
+                        "C_CMD_IT04",
+                        "C_CMD_IT03",
+                        "C_CMD_IT06",
+                        "C_CMD_IT05"
+                    )
+                ),
+                CodeFunction(
+                    "Minimum Length 0f Code Reading",
+                    CodeLength(
+                        "Interleaved 2 of 5",
+                        1,
+                        255,
+                        1,
+                        "Minimum Length 0f Code Reading",
+                        "C_CMD_IT0A"
+                    )
+                ),
+                CodeFunction(
+                    "Maximum Length 0f Code Reading",
+                    CodeLength(
+                        "Interleaved 2 of 5",
+                        1,
+                        255,
+                        1,
+                        "Maximum Length 0f Code Reading",
+                        "C_CMD_IT0B"
+                    )
+                )
+            )
+        ),
+        CodeObj(
+            "Matrix 2 of 5",
+            listOf(
+                CodeFunction(
+                    "Enable/Disable",
+                    "Matrix 2 of 5",
+                    mutableListOf("Enable", "Disable"),
+                    mutableListOf("C_CMD_MA01", "C_CMD_MA00")
+                ),
+                CodeFunction(
+                    "Check Character",
+                    "Matrix 2 of 5",
+                    mutableListOf("Off", "On,Don’t Transmit", "On,Transmit"),
+                    mutableListOf("C_CMD_MA02", "C_CMD_MA04", "C_CMD_MA03")
+                ),
+                CodeFunction(
+                    "Minimum Length 0f Code Reading",
+                    CodeLength(
+                        "Matrix 2 of 5",
+                        1,
+                        255,
+                        1,
+                        "Minimum Length 0f Code Reading",
+                        "C_CMD_MA0A"
+                    )
+                ),
+                CodeFunction(
+                    "Maximum Length 0f Code Reading",
+                    CodeLength(
+                        "Matrix 2 of 5",
+                        1,
+                        255,
+                        1,
+                        "Maximum Length 0f Code Reading",
+                        "C_CMD_MA0B"
+                    )
+                )
+            )
+        ),
+        CodeObj(
+            "Industrial 2 of 5",
+            listOf(
+                CodeFunction(
+                    "Enable/Disable",
+                    "Industrial 2 of 5",
+                    mutableListOf("Enable", "Disable"),
+                    mutableListOf("C_CMD_IN01", "C_CMD_IN00")
+                ),
+                CodeFunction(
+                    "Check Character",
+                    "Industrial 2 of 5",
+                    mutableListOf("Off", "On,Don’t Transmit", "On,Transmit"),
+                    mutableListOf("C_CMD_IN02", "C_CMD_IN04", "C_CMD_IN03")
+                ),
+                CodeFunction(
+                    "Minimum Length 0f Code Reading",
+                    CodeLength(
+                        "Industrial 2 of 5",
+                        1,
+                        255,
+                        1,
+                        "Minimum Length 0f Code Reading",
+                        "C_CMD_IN0A"
+                    )
+                ),
+                CodeFunction(
+                    "Maximum Length 0f Code Reading",
+                    CodeLength(
+                        "Industrial 2 of 5",
+                        1,
+                        255,
+                        1,
+                        "Maximum Length 0f Code Reading",
+                        "C_CMD_IN0B"
+                    )
+                )
+            )
+        ),
+        CodeObj(
+            "IATA 2 of 5",
+            listOf(
+                CodeFunction(
+                    "Enable/Disable",
+                    "IATA 2 of 5",
+                    mutableListOf("Enable", "Disable"),
+                    mutableListOf("C_CMD_IA01", "C_CMD_IA00")
+                ),
+                CodeFunction(
+                    "Check Character",
+                    "IATA 2 of 5",
+                    mutableListOf("Off", "On,Don’t Transmit", "On,Transmit"),
+                    mutableListOf("C_CMD_IA02", "C_CMD_IA04", "C_CMD_IA03")
+                ),
+                CodeFunction(
+                    "Minimum Length 0f Code Reading",
+                    CodeLength(
+                        "IATA 2 of 5",
+                        1,
+                        255,
+                        1,
+                        "Minimum Length 0f Code Reading",
+                        "C_CMD_IA0A"
+                    )
+                ),
+                CodeFunction(
+                    "Maximum Length 0f Code Reading",
+                    CodeLength(
+                        "IATA 2 of 5",
+                        1,
+                        255,
+                        1,
+                        "Maximum Length 0f Code Reading",
+                        "C_CMD_IA0B"
+                    )
+                )
+            )
+        ),
+        CodeObj(
+            "Code 39",
+            listOf(
+                CodeFunction(
+                    "Enable/Disable",
+                    "Code 39",
+                    mutableListOf("Enable", "Disable"),
+                    mutableListOf("C_CMD_3901", "C_CMD_3900")
+                ),
+                CodeFunction(
+                    "Start/Stop Characters",
+                    "Code 39",
+                    mutableListOf("Transmit", "Don’t Transmit"),
+                    mutableListOf("C_CMD_3907", "C_CMD_3906")
+                ),
+                CodeFunction(
+                    "Check Character",
+                    "Code 39",
+                    mutableListOf("Off", "On,Don’t Transmit", "On,Transmit"),
+                    mutableListOf("C_CMD_3902", "C_CMD_3904", "C_CMD_3903")
+                ),
+                CodeFunction(
+                    "Full ASCII",
+                    "Code 39",
+                    mutableListOf("Disable Code 39 Full ASCII", "Enable Code 39 Full ASCII"),
+                    mutableListOf("C_CMD_39M2", "C_CMD_39M3")
+                ),
+                CodeFunction(
+                    "Code 32",
+                    "Code 39",
+                    mutableListOf("Disable", "Enable"),
+                    mutableListOf("C_CMD_39M0", "C_CMD_39M1")
+                ),
+                CodeFunction(
+                    "Minimum Length 0f Code Reading",
+                    CodeLength("Code 39", 1, 255, 1, "Minimum Length 0f Code Reading", "C_CMD_390A")
+                ),
+                CodeFunction(
+                    "Maximum Length 0f Code Reading",
+                    CodeLength("Code 39", 1, 255, 1, "Maximum Length 0f Code Reading", "C_CMD_390B")
+                )
+
+            )
+        ),
+        CodeObj(
+            "Code 93",
+            listOf(
+                CodeFunction(
+                    "Enable/Disable",
+                    "Code 93",
+                    mutableListOf("Enable", "Disable"),
+                    mutableListOf("C_CMD_9301", "C_CMD_9300")
+                ),
+                CodeFunction(
+                    "Minimum Length 0f Code Reading",
+                    CodeLength("Code 93", 1, 255, 1, "Minimum Length 0f Code Reading", "C_CMD_930A")
+                ),
+                CodeFunction(
+                    "Maximum Length 0f Code Reading",
+                    CodeLength("Code 93", 1, 255, 1, "Maximum Length 0f Code Reading", "C_CMD_930B")
+                )
+
+            )
+        ),
+        CodeObj(
+            "CodeBar",
+            listOf(
+                CodeFunction(
+                    "Enable/Disable",
+                    "CodeBar",
+                    mutableListOf("Enable", "Disable"),
+                    mutableListOf("C_CMD_BA01", "C_CMD_BA00")
+                ),
+                CodeFunction(
+                    "Check Character",
+                    "CodeBar",
+                    mutableListOf(
+                        "Off",
+                        "Mod 10 Check,Don’t Transmit",
+                        "Mod 10 Check,Transmit",
+                        "Mod 16 Check,Don’t Transmit",
+                        "Mod 16 Check,Transmit"
+                    ),
+                    mutableListOf(
+                        "C_CMD_BA02",
+                        "C_CMD_BA04",
+                        "C_CMD_BA03",
+                        "C_CMD_BA06",
+                        "C_CMD_BA05"
+                    )
+                ),
+                CodeFunction(
+                    "Minimum Length 0f Code Reading",
+                    CodeLength("CodeBar", 1, 255, 1, "Minimum Length 0f Code Reading", "C_CMD_BA0A")
+                ),
+                CodeFunction(
+                    "Maximum Length 0f Code Reading",
+                    CodeLength("CodeBar", 1, 255, 1, "Maximum Length 0f Code Reading", "C_CMD_BA0B")
+                ),
+                CodeFunction(
+                    "Output Of Start and Stop Characters",
+                    "CodeBar",
+                    mutableListOf("Off", "ABCD/ABCD", "ABCD/TN*E", "abcd/abcd", "abcd/tn*e"),
+                    mutableListOf(
+                        "C_CMD_BAS0",
+                        "C_CMD_BAS2",
+                        "C_CMD_BAS3",
+                        "C_CMD_BAS4",
+                        "C_CMD_BAS5"
+                    )
+                )
+            )
+        ),
+        CodeObj(
+            "PDF417",
+            listOf(
+                CodeFunction(
+                    "Enable/Disable",
+                    "PDF417",
+                    mutableListOf("Enable", "Disable"),
+                    mutableListOf("C_CMD_PDF1", "C_CMD_PDF0")
+                )
+            )
+        ),
+        CodeObj(
+            "QR",
+            listOf(
+                CodeFunction(
+                    "Enable/Disable",
+                    "QR",
+                    mutableListOf("Enable", "Disable"),
+                    mutableListOf("C_CMD_QR01", "C_CMD_QR00")
+                )
+            )
+        ),
+        CodeObj(
+            "DM",
+            listOf(
+                CodeFunction(
+                    "Enable/Disable",
+                    "DM",
+                    mutableListOf("Enable", "Disable"),
+                    mutableListOf("C_CMD_DM01", "C_CMD_DM00")
+                )
+            )
+        )
+    )
+}

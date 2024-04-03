@@ -10,12 +10,16 @@ import kotlinx.coroutines.flow.Flow
 interface BarCodeDao {
     @Query("SELECT * FROM config order by id")
     fun selectAllConfig(): MutableList<Config>
+
     @Query("SELECT * FROM config order by id")
     fun observerConfigChange(): LiveData<List<Config>>
+
     @Query("SELECT * FROM config order by id")
     fun observerConfig(): LiveData<List<Config>>
+
     @Query("SELECT * FROM config where `key`=(:key)")
-    fun observerConfig2(key:String): LiveData<Config>
+    fun observerConfig2(key: String): LiveData<Config>
+
     @Query("SELECT * FROM config")
     fun getAll(): Flow<List<Config>>
 
@@ -66,4 +70,25 @@ interface BarCodeDao {
 
     @Query("SELECT id FROM data ORDER BY id DESC Limit 1")
     fun getLastID(): Long
+
+    @Query("DELETE FROM me11SymData")
+    fun delAllSymbologyData()
+
+    @Delete
+    fun deleteSymbologyData(me11SymbologyData: ME11SymbologyData)
+
+    @Update
+    fun updateSymbologyData(me11SymbologyData: ME11SymbologyData)
+
+    @Query("SELECT * FROM me11SymData where `symbologyData`=(:symbologyData) AND `symbologyItemInfo`=(:symbologyItemInfo)")
+    fun selectSymbologyDataFromSymbologyData(
+        symbologyData: String,
+        symbologyItemInfo: String
+    ): MutableList<ME11SymbologyData>
+
+    @Query("select 1 from me11SymData where `symbologyData`=(:symbologyData) AND `symbologyItemInfo`=(:symbologyItemInfo)  limit 1")
+    fun symbologyHasExits(symbologyData: String, symbologyItemInfo: String): Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertSymbologyData(vararg me11SymbologyData: ME11SymbologyData)
 }

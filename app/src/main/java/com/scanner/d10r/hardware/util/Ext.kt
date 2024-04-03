@@ -12,6 +12,7 @@ import com.scanner.d10r.hardware.MyApplication
 import com.scanner.d10r.hardware.MyApplication.Companion.mContext
 import com.scanner.d10r.hardware.bean.KeyValue
 import com.scanner.d10r.hardware.db.Config
+import com.scanner.d10r.hardware.db.ME11SymbologyData
 import com.scanner.d10r.hardware.enums.ConfigEnum
 import com.scannerd.d10r.hardware.BuildConfig
 import kotlinx.coroutines.Dispatchers
@@ -120,10 +121,23 @@ fun update2Db(config: Config) {
     }
 }
 
+fun update2SymbologyData(me11SymbologyData: ME11SymbologyData) {
+    try {
+        if (MyApplication.dao.symbologyHasExits(
+                me11SymbologyData.symbologyData,
+                me11SymbologyData.symbologyItemInfo
+            ) == 1
+        ) me11SymbologyData.update() else me11SymbologyData.insert()
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
 fun import2DB(list: List<KeyValue>) = list.forEach {
-    println("这里的结果分别是》》》》   ${it.key}   ${it.value} ")
     update2Db(Config(0, it.key, it.value))
 }
+private fun ME11SymbologyData.update() = MyApplication.dao.updateSymbologyData(this)
+private fun ME11SymbologyData.insert() = MyApplication.dao.insertSymbologyData(this)
 
 private fun Config.update() = MyApplication.dao.updateConfig(this)
 private fun Config.insert() = MyApplication.dao.insertConfig(this)
@@ -134,24 +148,24 @@ fun firstUpdate(data: List<Config>) {
     configs.clear()
     configs.addAll(data)
     model = configs.firstOrNull { it.key == ConfigEnum.model.name }?.value.toString()
-
-    isScanVoice =
-        configs.firstOrNull { it.key == ConfigEnum.ScanVoice.name }?.value?.toBoolean() ?: true
-    isStartVoice =
-        configs.firstOrNull { it.key == ConfigEnum.StartVoice.name }?.value?.toBoolean() ?: true
-    isScanModel = configs.firstOrNull { it.key == ConfigEnum.ScanModel.name }?.value ?: "SCNMOD0"
-    oneScanOverTime = configs.firstOrNull { it.key == ConfigEnum.OneTime.name }?.value ?: "3000"
-    senseModeValue =
-        configs.firstOrNull { it.key == ConfigEnum.SenseScanValue.name }?.value ?: "S_CMD_MS51"
-
     scanModule = configs.firstOrNull { it.key == ConfigEnum.ScanModule.name }?.value?.toInt() ?: 0
-
-    reScanTime = configs.firstOrNull { it.key == ConfigEnum.ReTime.name }?.value ?: "100"
-    aimLight = configs.firstOrNull { it.key == ConfigEnum.AimLight.name }?.value ?: "AMLENA1"
-    externalLighting =
-        configs.firstOrNull { it.key == ConfigEnum.OutLight.name }?.value ?: "ILLSCN1"
-    voiceValue = configs.firstOrNull { it.key == ConfigEnum.VoiceValue.name }?.value ?: "GRBVLL20"
-
+    if (scanModule == 3) {
+        isScanVoice =
+            configs.firstOrNull { it.key == ConfigEnum.ScanVoice.name }?.value?.toBoolean() ?: true
+        isStartVoice =
+            configs.firstOrNull { it.key == ConfigEnum.StartVoice.name }?.value?.toBoolean() ?: true
+        isScanModel =
+            configs.firstOrNull { it.key == ConfigEnum.ScanModel.name }?.value ?: "SCNMOD0"
+        oneScanOverTime = configs.firstOrNull { it.key == ConfigEnum.OneTime.name }?.value ?: "3000"
+        senseModeValue =
+            configs.firstOrNull { it.key == ConfigEnum.SenseScanValue.name }?.value ?: "S_CMD_MS51"
+        reScanTime = configs.firstOrNull { it.key == ConfigEnum.ReTime.name }?.value ?: "100"
+        aimLight = configs.firstOrNull { it.key == ConfigEnum.AimLight.name }?.value ?: "AMLENA1"
+        externalLighting =
+            configs.firstOrNull { it.key == ConfigEnum.OutLight.name }?.value ?: "ILLSCN1"
+        voiceValue =
+            configs.firstOrNull { it.key == ConfigEnum.VoiceValue.name }?.value ?: "GRBVLL20"
+    }
     isReplaceInvisibleChar =
         configs.firstOrNull { it.key == ConfigEnum.ReplaceInvisibleChar.name }?.value?.toBoolean()
             ?: false

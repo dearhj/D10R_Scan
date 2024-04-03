@@ -14,6 +14,7 @@ import com.scannerd.d10r.hardware.databinding.ActivitySymbologyNewBinding
 class SymbologyHrNewLandActivity : BaseBackActivity() {
     private lateinit var binding: ActivitySymbologyNewBinding
     private val adapter: NodeTreeAdapter = NodeTreeAdapter()
+    private var symbologyConfig: MutableList<CodeObj>? = null
     private val list = ArrayList<BaseNode>()
     private var activityFlag = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,51 +24,32 @@ class SymbologyHrNewLandActivity : BaseBackActivity() {
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
-        if (scanModule == 1) {
-            getAllConfig().forEach { codeObj ->
-                val secondList = ArrayList<BaseNode>()
-                codeObj.functions.forEach { s ->
-                    secondList.add(
-                        SecondNode(
-                            s.name,
-                            s.default,
-                            s.query,
-                            s.uiList,
-                            s.uiValue,
-                            s.min,
-                            s.max,
-                            s.step,
-                            s.length,
-                            s.addValue,
-                            null
-                        )
+        if (scanModule == 1) symbologyConfig = getAllConfig()
+        else if (scanModule == 2) symbologyConfig = getAllEM3100Config()
+        else if (scanModule == 3) symbologyConfig = getAllME11Config()
+
+        symbologyConfig!!.forEach { codeObj ->
+            val secondList = ArrayList<BaseNode>()
+            codeObj.functions.forEach { s ->
+                secondList.add(
+                    SecondNode(
+                        s.name,
+                        s.default,
+                        s.query,
+                        s.uiList,
+                        s.uiValue,
+                        s.min,
+                        s.max,
+                        s.step,
+                        s.length,
+                        s.addValue,
+                        null
                     )
-                }
-                list.add(FirstNode(codeObj.codeName, secondList))
+                )
             }
-        } else if (scanModule == 2) {
-            getAllEM3100Config().forEach { codeObj ->
-                val secondList = ArrayList<BaseNode>()
-                codeObj.functions.forEach { s ->
-                    secondList.add(
-                        SecondNode(
-                            s.name,
-                            s.default,
-                            s.query,
-                            s.uiList,
-                            s.uiValue,
-                            s.min,
-                            s.max,
-                            s.step,
-                            s.length,
-                            s.addValue,
-                            null
-                        )
-                    )
-                }
-                list.add(FirstNode(codeObj.codeName, secondList))
-            }
+            list.add(FirstNode(codeObj.codeName, secondList))
         }
+
         adapter.setList(list)
         setOnChangeUsb {
             if (activityFlag) {
