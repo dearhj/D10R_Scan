@@ -87,5 +87,8 @@ enum class ConfigEnum {
     ReTime,
 
     //扫描模块
-    ScanModule
+    ScanModule,
+
+    //感应模式灵敏度
+    SenseScanValue
 }

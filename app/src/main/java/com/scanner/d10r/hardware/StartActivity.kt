@@ -15,6 +15,7 @@ import com.scanner.d10r.hardware.barcodeservice.Gh0stService
 import com.scanner.d10r.hardware.base.BaseActivity
 import com.scanner.d10r.hardware.bean.Constants.em3100
 import com.scanner.d10r.hardware.bean.Constants.hr22p
+import com.scanner.d10r.hardware.bean.Constants.me11
 import com.scanner.d10r.hardware.symbology.SymbologyHrNewLandActivity
 import com.scanner.d10r.hardware.util.checkUsbDevice
 import com.scanner.d10r.hardware.util.isAutoCleanEditText
@@ -75,6 +76,9 @@ class StartActivity : BaseActivity() {
                 } else if (scanModule == 2) {
                     if (checkUsbDevice(34, 7851)) startActivity<SettingActivity>()
                     else showToast(getString(R.string.checkConnect))
+                } else if (scanModule == 3) {
+                    if (checkUsbDevice(34819, 9969)) startActivity<SettingActivity>()
+                    else showToast(getString(R.string.checkConnect))
                 }
             }
 
@@ -86,6 +90,10 @@ class StartActivity : BaseActivity() {
                     }
                     em3100 -> {
                         if (checkUsbDevice(34, 7851)) startActivity<SymbologyHrNewLandActivity>()
+                        else showToast(getString(R.string.checkConnect))
+                    }
+                    me11 -> {
+                        if (checkUsbDevice(34819, 9969)) startActivity<SettingActivity>()
                         else showToast(getString(R.string.checkConnect))
                     }
                 }

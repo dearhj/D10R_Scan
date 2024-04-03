@@ -264,15 +264,17 @@
 
     <string name="re_scan_mode">重读延迟(相同条码)</string>
     <string name="one_scan_timeout">一次读码超时时间</string>
+    <string name="senseModeValue">感应模式灵敏度</string>
     <string name="scan_sp">识读偏好</string>
     <string name="screen">屏幕模式</string>
     <string name="normal">普通模式</string>
     <string name="scan_voice_value">解码提示音音量</string>
     <string name="light_bt">外部照明灯设置</string>
     <string name="light_am">瞄准灯设置</string>
-    <string name="scan_voice_l">小</string>
+    <string name="scan_voice_l">低</string>
     <string name="scan_voice_m">中</string>
-    <string name="scan_voice_h">大</string>
+    <string name="scan_voice_h">高</string>
+    <string name="scan_voice_vh">特高</string>
     <string name="TextConfigErr">配置错误，请重试！</string>
     <string name="open">开启</string>
     <string name="TextSenseMode">感应扫描模式</string>

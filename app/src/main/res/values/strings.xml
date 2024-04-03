@@ -267,6 +267,7 @@
 
     <string name="re_scan_mode">Rereading Delay(same barcode)</string>
     <string name="one_scan_timeout">One Time Code Reading Timeout</string>
+    <string name="senseModeValue">Sensitivity Of Induction Mode</string>
     <string name="scan_sp">Reading Preferences</string>
     <string name="screen">Screen mode</string>
     <string name="normal">Normal mode</string>
@@ -276,6 +277,7 @@
     <string name="scan_voice_l">Low</string>
     <string name="scan_voice_m">Medium</string>
     <string name="scan_voice_h">High</string>
+    <string name="scan_voice_vh">Extra High</string>
     <string name="TextConfigErr">Configuration error</string>
     <string name="open">Open</string>
     <string name="TextSenseMode">Induction scanning mode</string>

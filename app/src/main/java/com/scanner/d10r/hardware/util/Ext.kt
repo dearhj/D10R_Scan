@@ -44,6 +44,8 @@ var aimLight = "AMLENA1"   //瞄准灯
 //ILLSCN0  关闭
 var externalLighting = "ILLSCN1"    //外部照明灯
 
+var senseModeValue = "S_CMD_MS51"  //感应模式灵敏度
+
 var model = ""  //设备型号
 
 //SCNMOD0 电平触发
@@ -120,20 +122,36 @@ fun update2Db(config: Config) {
 
 fun import2DB(list: List<KeyValue>) = list.forEach {
     println("这里的结果分别是》》》》   ${it.key}   ${it.value} ")
-    updateKT(it.key, it.value)
+    update2Db(Config(0, it.key, it.value))
 }
 
 private fun Config.update() = MyApplication.dao.updateConfig(this)
 private fun Config.insert() = MyApplication.dao.insertConfig(this)
 fun getKt(key: String): String? = configs.firstOrNull { it.key == key }?.value
 
-//TODO 不要用枚举的查找的方式来做
 fun firstUpdate(data: List<Config>) {
     "firstUpdate ${data.size}".logD()
     configs.clear()
     configs.addAll(data)
     model = configs.firstOrNull { it.key == ConfigEnum.model.name }?.value.toString()
+
+    isScanVoice =
+        configs.firstOrNull { it.key == ConfigEnum.ScanVoice.name }?.value?.toBoolean() ?: true
+    isStartVoice =
+        configs.firstOrNull { it.key == ConfigEnum.StartVoice.name }?.value?.toBoolean() ?: true
+    isScanModel = configs.firstOrNull { it.key == ConfigEnum.ScanModel.name }?.value ?: "SCNMOD0"
+    oneScanOverTime = configs.firstOrNull { it.key == ConfigEnum.OneTime.name }?.value ?: "3000"
+    senseModeValue =
+        configs.firstOrNull { it.key == ConfigEnum.SenseScanValue.name }?.value ?: "S_CMD_MS51"
+
     scanModule = configs.firstOrNull { it.key == ConfigEnum.ScanModule.name }?.value?.toInt() ?: 0
+
+    reScanTime = configs.firstOrNull { it.key == ConfigEnum.ReTime.name }?.value ?: "100"
+    aimLight = configs.firstOrNull { it.key == ConfigEnum.AimLight.name }?.value ?: "AMLENA1"
+    externalLighting =
+        configs.firstOrNull { it.key == ConfigEnum.OutLight.name }?.value ?: "ILLSCN1"
+    voiceValue = configs.firstOrNull { it.key == ConfigEnum.VoiceValue.name }?.value ?: "GRBVLL20"
+
     isReplaceInvisibleChar =
         configs.firstOrNull { it.key == ConfigEnum.ReplaceInvisibleChar.name }?.value?.toBoolean()
             ?: false
@@ -224,6 +242,7 @@ fun filterModuleIndex(deviceType: Int): Int {
     return when (deviceType) {
         com.scanner.d10r.hardware.bean.Constants.hr22p -> 0
         com.scanner.d10r.hardware.bean.Constants.em3100 -> 1
+        com.scanner.d10r.hardware.bean.Constants.me11 -> 2
         else -> 0
     }
 }
@@ -265,7 +284,8 @@ val importList = listOf(
     ConfigEnum.ScanSp.name,
     ConfigEnum.VoiceValue.name,
     ConfigEnum.AimLight.name,
-    ConfigEnum.OutLight.name
+    ConfigEnum.OutLight.name,
+    ConfigEnum.SenseScanValue.name
 )
 
 fun importConfig(
@@ -285,8 +305,10 @@ fun importConfig(
                     listScan.add(KeyValue(pair.first, pair.second))
                 } else list.add(KeyValue(pair.first, pair.second))
             }
+            MyApplication.dao.deleteAllConfig()
             import2DB(list)
             importScan(listScan)
+            if (scanModule == 3) import2DB(listScan)
             withContext(Dispatchers.Main) {
                 firstUpdate(MyApplication.dao.selectAllConfig())
                 success()
