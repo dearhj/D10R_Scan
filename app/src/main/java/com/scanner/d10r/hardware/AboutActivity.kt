@@ -25,9 +25,8 @@ class AboutActivity : BaseBackActivity() {
         binding = AboutBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.tvAppVersion.text = String.format(
-            "v%s-%s(%s)\n%s",
+            "v%s(%s)\n%s",
             BuildConfig.VERSION_NAME,
-            BuildConfig.FLAVOR.substring(0, 1),
             BuildConfig.GIT_SHA,
             BuildConfig.BUILD_TIME.date()
         )

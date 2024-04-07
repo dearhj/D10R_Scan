@@ -38,14 +38,6 @@ android {
             keyPassword('android')
         }
     }
-    productFlavors {
-        normal {
-            buildConfigField "String", "MODULE_NAME", "\"normal\""
-        }
-        serialport {
-            buildConfigField "String", "MODULE_NAME", "\"serialport\""
-        }
-    }
     buildTypes {
         debug {
             versionNameSuffix ' D'
