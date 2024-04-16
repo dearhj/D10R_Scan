@@ -1,6 +1,7 @@
 package com.scanner.d10r.hardware.barcodeservice
 
 import android.annotation.SuppressLint
+import android.app.Instrumentation
 import android.app.KeyguardManager
 import android.app.Notification
 import android.app.NotificationChannel
@@ -19,6 +20,7 @@ import android.os.Looper
 import android.os.PowerManager
 import android.os.UserManager
 import android.text.TextUtils
+import android.view.KeyEvent
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleService
@@ -74,6 +76,7 @@ class UsbScanService : LifecycleService() {
 
     private var mHIDOpenListener: HIDOpenListener? = null
     private var mHidDataListener: HIDDataListener? = null
+    private var screenOff = false
 
     companion object {
         val ds: NLDeviceStream = NLDevice(NLDeviceStream.DevClass.DEV_COMPOSITE)
@@ -104,6 +107,7 @@ class UsbScanService : LifecycleService() {
         startForeground(1, notification)
 
         register()
+        screenOff = false
         if (scanModule == 1 || scanModule == 2) onOpenDevice()
         else if (scanModule == 3) openYdScanModule()
         clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
@@ -235,9 +239,16 @@ class UsbScanService : LifecycleService() {
                 when (action) {
                     actionSettings -> actionSettings(intent.getStringExtra("settings"))
 
-                    Intent.ACTION_SCREEN_ON -> "亮屏".logD()
+                    Intent.ACTION_SCREEN_ON -> {
+                        "亮屏".logD()
+                        screenOff = false
+                    }
 
-                    Intent.ACTION_SCREEN_OFF -> "息屏".logD()
+                    Intent.ACTION_SCREEN_OFF -> {
+                        "息屏".logD()
+                        screenOff = true
+                        alreadyPressedPower = false
+                    }
 
                     Intent.ACTION_USER_PRESENT -> "解锁".logD()
 
@@ -303,7 +314,12 @@ class UsbScanService : LifecycleService() {
     }
 
 
+    private var alreadyPressedPower = false
     private fun share2Third(dataByte: ByteArray) {
+        if (screenOff && !alreadyPressedPower) {
+            Instrumentation().sendKeyDownUpSync(KeyEvent.KEYCODE_POWER)
+            alreadyPressedPower = true
+        }
         //下面这一行作用是实现字符替换功能。
         val codeData = replaceChar(dataByte)
         //下面这一行的作用是实现不可见字符替换。
