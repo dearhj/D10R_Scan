@@ -170,13 +170,16 @@ class UsbScanService : LifecycleService() {
             }
         }
         mHidDataListener = HIDDataListener { a: Byte, bytes: ByteArray?, length: Int ->
-            //去掉默认的0x0D后缀
             println("这里获取到的数据是？？？？   $a  $length   ${bytes?.get(0)}   ${bytes?.get(1)}")
             //bytes?.get(0) = -112, bytes?.get(1) = 0 代表扫码头参数配置成功
             //bytes?.get(0) = 106, bytes?.get(1) = -119 代表扫码头参数配置失败
             if (bytes != null) {
-                if (!(length == 2 && (bytes[0] == (-112).toByte() || bytes[0] == (106).toByte()) && (bytes[1] == 0.toByte() || bytes[1] == (-119).toByte())))
-                    share2Third(bytes.copyOfRange(0, length - 1))
+                if (!(length == 2 && (bytes[0] == (-112).toByte() || bytes[0] == (106).toByte()) && (bytes[1] == 0.toByte() || bytes[1] == (-119).toByte()))) {
+                    //去掉默认的0x0D后缀
+                    if (bytes[length - 1] == 13.toByte())
+                        share2Third(bytes.copyOfRange(0, length - 1))
+                    else share2Third(bytes.copyOfRange(0, length))
+                }
             }
             val dataMessage =
                 StringFormat.bytes2String(bytes, "UTF-8")
@@ -198,9 +201,11 @@ class UsbScanService : LifecycleService() {
 
                     override fun actionUsbRecv(recvBuff: ByteArray, len: Int) {
                         if (usbOpenChecked) {
-                            if (recvBuff[0] != 2.toByte() && recvBuff[1] != 1.toByte() && recvBuff[2] != 48.toByte()) {
+                            if (recvBuff[0] != 2.toByte() && recvBuff[1] != 1.toByte()) {
                                 //去掉默认的0x0D后缀
-                                share2Third(recvBuff.copyOfRange(0, len - 1))
+                                if (recvBuff[len - 1] == 13.toByte())
+                                    share2Third(recvBuff.copyOfRange(0, len - 1))
+                                else share2Third(recvBuff.copyOfRange(0, len))
                             }
                         }
                     }
