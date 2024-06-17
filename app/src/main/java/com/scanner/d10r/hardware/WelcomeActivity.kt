@@ -20,7 +20,7 @@ class WelcomeActivity : BaseActivity() {
         val tv = findViewById<TextView>(R.id.tv_version)
         tv.text = getString(R.string.app_name) + " v" + BuildConfig.VERSION_NAME
         mHandler.postDelayed({
-            if (scanModule in 1..3) {
+            if (scanModule in 1..4) {
                 setIsFirstOpen(false)
                 startActivity<StartActivity>()
             } else startActivity<ChooseScannerActivity>()

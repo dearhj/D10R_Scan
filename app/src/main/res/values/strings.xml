@@ -86,6 +86,7 @@
     <string name="hr22p">HR22+</string>
     <string name="em3100">EM3100</string>
     <string name="me11">ME11</string>
+    <string name="m1" translatable="false">M1</string>
     <string name="motoloraone">Motorola One dimensional</string>
     <string name="totinfo_scanner">Totinfo two dimensional</string>
     <string name="newland_scanner">Newland two dimensional</string>
@@ -277,7 +278,11 @@
     <string name="scan_voice_l">Low</string>
     <string name="scan_voice_m">Medium</string>
     <string name="scan_voice_h">High</string>
-    <string name="scan_voice_vh">Extra High</string>
+    <string name="scan_sense_ll">Extremely Low</string>
+    <string name="scan_sense_l">Low</string>
+    <string name="scan_sense_m">Medium</string>
+    <string name="scan_sense_h">High</string>
+    <string name="scan_sense_hh">Extremely High</string>
     <string name="TextConfigErr">Configuration error</string>
     <string name="open">Open</string>
     <string name="TextSenseMode">Induction scanning mode</string>
@@ -288,5 +293,6 @@
     <string name="checkConnect">The device is not connected. Please check the connection status of the scanning device and try again.</string>
     <string name="connectError">Communication abnormal, please stop scanning or check the connection status first, the page will close!</string>
     <string name="voice_off">Decoding prompt sound has been turned off</string>
+    <string name="sense_off">Induction scanning mode has been turned off</string>
     <string name="activity_close">The scanner is disconnected from the device and the page will close</string>
 </resources>

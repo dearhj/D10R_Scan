@@ -109,7 +109,7 @@ class UsbScanService : LifecycleService() {
         register()
         screenOff = false
         if (scanModule == 1 || scanModule == 2) onOpenDevice()
-        else if (scanModule == 3) openYdScanModule()
+        else if (scanModule == 3 || scanModule == 4) openYdScanModule()
         clipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
         mKeyguardManager = getSystemService(KEYGUARD_SERVICE) as KeyguardManager
         powerManager = getSystemService(POWER_SERVICE) as PowerManager
@@ -118,8 +118,8 @@ class UsbScanService : LifecycleService() {
         //监听到模块改变了
         setSPChange {
             //26f1:8803   易度模块
-            println("模块改变了，，， 切换到了模块 $it")
-            if (it != "3") {
+            "模块改变了，，， 切换到了模块 $it".logD()
+            if (it == "1" || it == "2") {
                 closeYdScanModule()
                 onOpenDevice()
             } else {
@@ -148,10 +148,10 @@ class UsbScanService : LifecycleService() {
         mHIDOpenListener = object : HIDOpenListener {
             override fun onSuccess(status: ConnectionStatus) {
                 if (status == ConnectionStatus.USB_CONNECT)
-                    println("连接usb成功")
+                    "连接usb成功".logD()
                 else if (status == ConnectionStatus.COMMUNICATION_OPEN) {
                     ydOpenChecked = true
-                    println("通讯建立成功")
+                    "通讯建立成功".logD()
                     //建立连接后，应该修改连续模式识读间隔时长为0ms
                     HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_MARR000"))
                 }
@@ -161,16 +161,16 @@ class UsbScanService : LifecycleService() {
                 if (status == ConnectionStatus.USB_DISCONNECT) {
                     //USB断开
                     ydOpenChecked = false
-                    println("断开USB")
+                    "断开USB".logD()
                 } else if (status == ConnectionStatus.COMMUNICATION_CLOSE) {
                     //服务销毁
                     ydOpenChecked = false
-                    println("通讯断开")
+                    "通讯断开".logD()
                 }
             }
         }
         mHidDataListener = HIDDataListener { a: Byte, bytes: ByteArray?, length: Int ->
-            println("这里获取到的数据是？？？？   $a  $length   ${bytes?.get(0)}   ${bytes?.get(1)}")
+            "扫描数据-> $a  $length   bytes[0]=${bytes?.get(0)}   bytes[1]=${bytes?.get(1)}".logD()
             //bytes?.get(0) = -112, bytes?.get(1) = 0 代表扫码头参数配置成功
             //bytes?.get(0) = 106, bytes?.get(1) = -119 代表扫码头参数配置失败
             if (bytes != null) {
@@ -180,11 +180,6 @@ class UsbScanService : LifecycleService() {
                         share2Third(bytes.copyOfRange(0, length - 1))
                     else share2Third(bytes.copyOfRange(0, length))
                 }
-            }
-            val dataMessage =
-                StringFormat.bytes2String(bytes, "UTF-8")
-            if (!TextUtils.isEmpty(dataMessage)) {
-                println("这里收到了扫描数据，结果是？   ￥￥ $dataMessage")
             }
         }
     }
@@ -217,7 +212,6 @@ class UsbScanService : LifecycleService() {
             try {
                 //默认打开重读延迟100ms
                 val reScanTimeStatusOff = ds.getConfig("RRDENA*").contains("0")
-                println("设备打开   $reScanTimeStatusOff")
                 if (reScanTimeStatusOff) {
                     ds.setConfig("@RRDENA1")
                     ds.setConfig("@RRDDUR100")
@@ -230,7 +224,7 @@ class UsbScanService : LifecycleService() {
     fun onCloseDevice() {
         if (usbOpenChecked) {
             ds.close()
-            println("设备关闭")
+            "设备关闭".logD()
             usbOpenChecked = false
         }
     }
@@ -265,26 +259,26 @@ class UsbScanService : LifecycleService() {
                                 onOpenDevice()
                                 deviceFlag = false
                             }
-                            if (device.vendorId == 9969 && device.productId == 34819 && scanModule == 3) {
+                            if (device.vendorId == 9969 && device.productId == 34819 && (scanModule == 3 || scanModule == 4)) {
                                 openYdScanModule()
                                 deviceFlag = false
                             }
-                            println("这里USB设备信息的vid是》》》   ${device.vendorId}    ${device.productId}")
+                            "监听到usb设备插入   vid=${device.vendorId}    pid=${device.productId}".logD()
                         }
                     }
 
                     UsbManager.ACTION_USB_DEVICE_DETACHED -> {
                         val device =
                             intent.getParcelableExtra(UsbManager.EXTRA_DEVICE) as UsbDevice?
-                        println("这里USB设备信息的vid是》》》   ${device?.vendorId}    ${device?.productId}") // 9969    34819
                         if (device != null) {
-                            if (device.vendorId == 7851 && (device.productId == 6690 || device.productId == 34) && scanModule != 3) {
+                            "监听到usb设备拔出   vid=${device.vendorId}    pid=${device.productId}".logD()
+                            if (device.vendorId == 7851 && (device.productId == 6690 || device.productId == 34) && (scanModule == 1 || scanModule == 2)) {
                                 if (!deviceFlag) deviceChange =
                                     System.currentTimeMillis().toString() //通知设备已经被拔出
                                 deviceFlag = true
                                 onCloseDevice()
                             }
-                            if (scanModule == 3 && device.vendorId == 9969 && device.productId == 34819) {
+                            if ((scanModule == 3 || scanModule == 4) && device.vendorId == 9969 && device.productId == 34819) {
                                 ////关闭连接
                                 if (!deviceFlag) deviceChange =
                                     System.currentTimeMillis().toString() //通知设备已经被拔出

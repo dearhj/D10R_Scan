@@ -274,7 +274,11 @@
     <string name="scan_voice_l">低</string>
     <string name="scan_voice_m">中</string>
     <string name="scan_voice_h">高</string>
-    <string name="scan_voice_vh">特高</string>
+    <string name="scan_sense_ll">极低</string>
+    <string name="scan_sense_l">低</string>
+    <string name="scan_sense_m">中</string>
+    <string name="scan_sense_h">高</string>
+    <string name="scan_sense_hh">极高</string>
     <string name="TextConfigErr">配置错误，请重试！</string>
     <string name="open">开启</string>
     <string name="TextSenseMode">感应扫描模式</string>
@@ -285,5 +289,6 @@
     <string name="checkConnect">设备未接入，请检查扫码设备连接状况后，再次尝试。</string>
     <string name="connectError">通信异常，请先停止扫码或检查连接状态，页面将关闭！</string>
     <string name="voice_off">解码提示音已关闭</string>
+    <string name="sense_off">感应扫描模式已关闭</string>
     <string name="activity_close">扫描器与设备断开连接，页面将关闭</string>
 </resources>

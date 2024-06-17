@@ -35,6 +35,7 @@ import com.scanner.d10r.hardware.util.dataEncoding
 import com.scanner.d10r.hardware.util.editDialog
 import com.scanner.d10r.hardware.util.externalLighting
 import com.scanner.d10r.hardware.util.firstUpdate
+import com.scanner.d10r.hardware.util.hidManager
 import com.scanner.d10r.hardware.util.importConfig
 import com.scanner.d10r.hardware.util.isAutoCleanEditText
 import com.scanner.d10r.hardware.util.isClipBoardChoose
@@ -55,10 +56,10 @@ import com.scanner.d10r.hardware.util.scanSp
 import com.scanner.d10r.hardware.util.senseModeValue
 import com.scanner.d10r.hardware.util.setIsFirstOpen
 import com.scanner.d10r.hardware.util.setOnChangeUsb
+import com.scanner.d10r.hardware.util.setSenseValue
 import com.scanner.d10r.hardware.util.voiceValue
 import com.scannerd.d10r.hardware.R
 import com.scannerd.d10r.hardware.databinding.ActivitySettingBinding
-import com.tsingtengms.scanmodule.libhidpos.HIDManager
 import com.tsingtengms.scanmodule.libhidpos.util.HexUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
@@ -75,15 +76,15 @@ class SettingActivity : BaseBackActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        if (scanModule == 2 || scanModule == 3) binding.rlScanPre.visibility = View.GONE
-        if (scanModule == 3) {
+        if (scanModule == 2 || scanModule == 3 || scanModule == 4) binding.rlScanPre.visibility =
+            View.GONE
+        if (scanModule == 3 || scanModule == 4) {
             binding.rlCouScan.visibility = View.VISIBLE
             binding.enableScan.visibility = View.GONE
         }
         initData1()
         initView1()
-
-        if (scanModule != 3) initData()
+        if (scanModule == 1 || scanModule == 2) initData()
         setOnChangeUsb {
             if (activityFlag) {
                 showToast(getString(R.string.connectError))
@@ -125,7 +126,7 @@ class SettingActivity : BaseBackActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        if (scanModule == 3) {
+        if (scanModule == 3 || scanModule == 4) {
             binding.sbEnable.isChecked = isEnable
             binding.sbVoice.isChecked = isScanVoice
             binding.sbStartVoice.isChecked = isStartVoice
@@ -454,17 +455,15 @@ class SettingActivity : BaseBackActivity() {
     }
 
     private fun initView1() {
-        if (scanModule == 3) {
+        if (scanModule == 3 || scanModule == 4) {
             binding.sbVoice.changed { isChecked ->
-                if (isChecked) HIDManager.getInstance()
-                    .sendData(HexUtil.stringToAscii("S_CMD_0403"))
-                else HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_0402"))
+                if (isChecked) hidManager.sendData(HexUtil.stringToAscii("S_CMD_0403"))
+                else hidManager.sendData(HexUtil.stringToAscii("S_CMD_0402"))
                 update(ConfigEnum.ScanVoice.name, "$isChecked")
             }
             binding.sbStartVoice.changed { isChecked ->
-                if (isChecked) HIDManager.getInstance()
-                    .sendData(HexUtil.stringToAscii("S_CMD_0401"))
-                else HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_0400"))
+                if (isChecked) hidManager.sendData(HexUtil.stringToAscii("S_CMD_0401"))
+                else hidManager.sendData(HexUtil.stringToAscii("S_CMD_0400"))
                 update(ConfigEnum.StartVoice.name, "$isChecked")
             }
             binding.rlChooseScanMode.setOnClickListener {
@@ -487,24 +486,24 @@ class SettingActivity : BaseBackActivity() {
                     when (witch) {
                         0 -> {
                             isScanModel = "SCNMOD0"
-                            HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_MT00"))
-                            HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_MT10"))
+                            hidManager.sendData(HexUtil.stringToAscii("S_CMD_MT00"))
+                            hidManager.sendData(HexUtil.stringToAscii("S_CMD_MT10"))
                         }
 
                         1 -> {
                             isScanModel = "SCNMOD2"
-                            HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_020F"))
+                            hidManager.sendData(HexUtil.stringToAscii("S_CMD_020F"))
                         }
 
                         2 -> {
                             isScanModel = "SCNMOD3"
-                            HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_020E"))
+                            hidManager.sendData(HexUtil.stringToAscii("S_CMD_020E"))
                         }
 
                         else -> {
                             isScanModel = "SCNMOD0"
-                            HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_MT00"))
-                            HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_MT10"))
+                            hidManager.sendData(HexUtil.stringToAscii("S_CMD_MT00"))
+                            hidManager.sendData(HexUtil.stringToAscii("S_CMD_MT10"))
                         }
                     }
                     update(ConfigEnum.ScanModel.name, isScanModel)
@@ -529,42 +528,43 @@ class SettingActivity : BaseBackActivity() {
                         3 -> "20000"
                         else -> "3000"
                     }
-                    HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_MTRS$oneScanOverTime"))
-                    HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_MSRS$oneScanOverTime"))
-                    HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_MARS$oneScanOverTime"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MTRS$oneScanOverTime"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MSRS$oneScanOverTime"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MARS$oneScanOverTime"))
                     update(ConfigEnum.OneTime.name, oneScanOverTime)
                 }
             }
             binding.rlCouScan.setOnClickListener {
-                val select = when (senseModeValue) {
-                    "S_CMD_MS51" -> 0
-                    "S_CMD_MS52" -> 1
-                    "S_CMD_MS53" -> 2
-                    "S_CMD_MS54" -> 3
-                    else -> 0
-                }
-                val list = arrayOf(
-                    getString(R.string.scan_voice_l),
-                    getString(R.string.scan_voice_m),
-                    getString(R.string.scan_voice_h),
-                    getString(R.string.scan_voice_vh)
-                )
-                choseSingleDialog(
-                    this, getString(R.string.senseModeValue), list, select
-                ) { _, witch ->
-                    senseModeValue = when (witch) {
-                        0 -> "S_CMD_MS51"
-                        1 -> "S_CMD_MS52"
-                        2 -> "S_CMD_MS53"
-                        3 -> "S_CMD_MS54"
-                        else -> "S_CMD_MS51"
+                if (isScanModel == "SCNMOD2") {
+                    val select = when (senseModeValue) {
+                        "S_CMD_D004" -> 0
+                        "S_CMD_D003" -> 1
+                        "S_CMD_D002" -> 2
+                        "S_CMD_D001" -> 3
+                        "S_CMD_D000" -> 4
+                        else -> 3
                     }
-                    HIDManager.getInstance().sendData(HexUtil.stringToAscii(senseModeValue))
-                    update(ConfigEnum.SenseScanValue.name, senseModeValue)
-                }
+                    val list = arrayOf(
+                        getString(R.string.scan_sense_ll),
+                        getString(R.string.scan_sense_l),
+                        getString(R.string.scan_sense_m),
+                        getString(R.string.scan_sense_h),
+                        getString(R.string.scan_sense_hh)
+                    )
+                    choseSingleDialog(
+                        this, getString(R.string.senseModeValue), list, select
+                    ) { _, witch ->
+                        senseModeValue = when (witch) {
+                            0 -> "S_CMD_D004"
+                            1 -> "S_CMD_D003"
+                            2 -> "S_CMD_D002"
+                            3 -> "S_CMD_D001"
+                            4 -> "S_CMD_D000"
+                            else -> "S_CMD_D001"
+                        }
+                        setSenseValue(senseModeValue)
+                    }
+                } else showToast(getString(R.string.sense_off))
             }
             binding.rlReScan.setOnClickListener {
                 val select = when (reScanTime) {
@@ -594,18 +594,12 @@ class SettingActivity : BaseBackActivity() {
                         5 -> "5000"
                         else -> "100"
                     }
-                    HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_MA31"))
-                    HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_MS31"))
-                    HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_MT31"))
-                    HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_MTRI$reScanTime"))
-                    HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_MSRI$reScanTime"))
-                    HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_MARI$reScanTime"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MA31"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MS31"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MT31"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MTRI$reScanTime"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MSRI$reScanTime"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MARI$reScanTime"))
 
                     update(ConfigEnum.ReTime.name, reScanTime)
                 }
@@ -626,17 +620,17 @@ class SettingActivity : BaseBackActivity() {
                     when (witch) {
                         0 -> {
                             aimLight = "AMLENA1"
-                            HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_03A2"))
+                            hidManager.sendData(HexUtil.stringToAscii("S_CMD_03A2"))
                         }
 
                         1 -> {
                             aimLight = "AMLENA0"
-                            HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_03A0"))
+                            hidManager.sendData(HexUtil.stringToAscii("S_CMD_03A0"))
                         }
 
                         else -> {
                             aimLight = "AMLENA1"
-                            HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_03A2"))
+                            hidManager.sendData(HexUtil.stringToAscii("S_CMD_03A2"))
                         }
                     }
                     update(ConfigEnum.AimLight.name, aimLight)
@@ -658,20 +652,17 @@ class SettingActivity : BaseBackActivity() {
                     when (witch) {
                         0 -> {
                             externalLighting = "ILLSCN1"
-                            HIDManager.getInstance()
-                                .sendData(HexUtil.stringToAscii("S_CMD_03L2"))
+                            hidManager.sendData(HexUtil.stringToAscii("S_CMD_03L2"))
                         }
 
                         1 -> {
                             externalLighting = "ILLSCN0"
-                            HIDManager.getInstance()
-                                .sendData(HexUtil.stringToAscii("S_CMD_03L0"))
+                            hidManager.sendData(HexUtil.stringToAscii("S_CMD_03L0"))
                         }
 
                         else -> {
                             externalLighting = "ILLSCN1"
-                            HIDManager.getInstance()
-                                .sendData(HexUtil.stringToAscii("S_CMD_03L2"))
+                            hidManager.sendData(HexUtil.stringToAscii("S_CMD_03L2"))
                         }
                     }
                     update(ConfigEnum.OutLight.name, externalLighting)
@@ -696,26 +687,22 @@ class SettingActivity : BaseBackActivity() {
                         when (witch) {
                             0 -> {
                                 voiceValue = "GRBVLL20"
-                                HIDManager.getInstance()
-                                    .sendData(HexUtil.stringToAscii("S_CMD_04V0"))
+                                hidManager.sendData(HexUtil.stringToAscii("S_CMD_04V0"))
                             }
 
                             1 -> {
                                 voiceValue = "GRBVLL10"
-                                HIDManager.getInstance()
-                                    .sendData(HexUtil.stringToAscii("S_CMD_04V1"))
+                                hidManager.sendData(HexUtil.stringToAscii("S_CMD_04V1"))
                             }
 
                             2 -> {
                                 voiceValue = "GRBVLL2"
-                                HIDManager.getInstance()
-                                    .sendData(HexUtil.stringToAscii("S_CMD_04V2"))
+                                hidManager.sendData(HexUtil.stringToAscii("S_CMD_04V2"))
                             }
 
                             else -> {
                                 voiceValue = "GRBVLL20"
-                                HIDManager.getInstance()
-                                    .sendData(HexUtil.stringToAscii("S_CMD_04V0"))
+                                hidManager.sendData(HexUtil.stringToAscii("S_CMD_04V0"))
                             }
                         }
                         update(ConfigEnum.VoiceValue.name, voiceValue)
@@ -725,9 +712,9 @@ class SettingActivity : BaseBackActivity() {
             //恢复默认参数  S_CMD_FFFF
             binding.btnSetFactory.setOnClickListener {
                 confirmDialog(this, getString(R.string.str_restore_factory)) {
-                    HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_FFFF"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_FFFF"))
                     //修改连续识读模式识读间隔0ms
-                    HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_MARR000"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MARR000"))
                     MyApplication.dao.delAllSymbologyData()
                     rereadConfigurationItems()
                     firstUpdate(MyApplication.dao.selectAllConfig())
@@ -812,8 +799,7 @@ class SettingActivity : BaseBackActivity() {
                         data = result,
                         importScan = { list ->
                             list.forEach { item ->
-                                if (scanModule != 3 && item.key != ConfigEnum.SenseScanValue.name)
-                                    ds.setConfig(item.value)
+                                if (scanModule != 3 && scanModule != 4) ds.setConfig(item.value)
                                 else setYdScanModuleConfig(item)
                             }
                         },
@@ -834,7 +820,7 @@ class SettingActivity : BaseBackActivity() {
                     MyApplication.dao.selectAllConfig().forEach {
                         list.add(Pair(it.key, it.value))
                     }
-                    if (scanModule != 3) {
+                    if (scanModule != 3 && scanModule != 4) {
                         list.add(
                             Pair(
                                 ConfigEnum.Enable.name,
@@ -929,98 +915,73 @@ class SettingActivity : BaseBackActivity() {
         when (keyValue.key) {
             ConfigEnum.ScanVoice.name -> {
                 if (keyValue.value.toBoolean())
-                    HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_0403"))
-                else HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_0402"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_0403"))
+                else hidManager.sendData(HexUtil.stringToAscii("S_CMD_0402"))
             }
 
             ConfigEnum.StartVoice.name -> {
                 if (keyValue.value.toBoolean())
-                    HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_0401"))
-                else HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_0400"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_0401"))
+                else hidManager.sendData(HexUtil.stringToAscii("S_CMD_0400"))
             }
 
             ConfigEnum.ScanModel.name -> {
                 when (keyValue.value) {
                     "SCNMOD0" -> {
-                        HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_MT00"))
-                        HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_MT10"))
+                        hidManager.sendData(HexUtil.stringToAscii("S_CMD_MT00"))
+                        hidManager.sendData(HexUtil.stringToAscii("S_CMD_MT10"))
                     }
 
-                    "SCNMOD2" -> HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_020F"))
+                    "SCNMOD2" -> hidManager.sendData(HexUtil.stringToAscii("S_CMD_020F"))
 
-                    "SCNMOD3" -> HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_020E"))
+                    "SCNMOD3" -> hidManager.sendData(HexUtil.stringToAscii("S_CMD_020E"))
                 }
             }
 
             ConfigEnum.OneTime.name -> {
-                HIDManager.getInstance()
-                    .sendData(HexUtil.stringToAscii("S_CMD_MTRS${keyValue.value}"))
-                HIDManager.getInstance()
-                    .sendData(HexUtil.stringToAscii("S_CMD_MSRS${keyValue.value}"))
-                HIDManager.getInstance()
-                    .sendData(HexUtil.stringToAscii("S_CMD_MARS${keyValue.value}"))
+                hidManager.sendData(HexUtil.stringToAscii("S_CMD_MTRS${keyValue.value}"))
+                hidManager.sendData(HexUtil.stringToAscii("S_CMD_MSRS${keyValue.value}"))
+                hidManager.sendData(HexUtil.stringToAscii("S_CMD_MARS${keyValue.value}"))
             }
-
-            ConfigEnum.SenseScanValue.name -> HIDManager.getInstance()
-                .sendData(HexUtil.stringToAscii(keyValue.value))
-
 
             ConfigEnum.ReTime.name -> {
                 if (keyValue.value == "0") {
-                    HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_MA30"))
-                    HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_MS30"))
-                    HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_MT30"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MA30"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MS30"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MT30"))
                 } else {
-                    HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_MA31"))
-                    HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_MS31"))
-                    HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_MT31"))
-                    HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_MTRI${keyValue.value}"))
-                    HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_MSRI${keyValue.value}"))
-                    HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_MARI${keyValue.value}"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MA31"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MS31"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MT31"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MTRI${keyValue.value}"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MSRI${keyValue.value}"))
+                    hidManager.sendData(HexUtil.stringToAscii("S_CMD_MARI${keyValue.value}"))
                 }
             }
 
             ConfigEnum.AimLight.name -> {
                 when (keyValue.value) {
-                    "AMLENA1" -> HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_03A2"))
+                    "AMLENA1" -> hidManager.sendData(HexUtil.stringToAscii("S_CMD_03A2"))
 
-                    "AMLENA0" -> HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_03A0"))
+                    "AMLENA0" -> hidManager.sendData(HexUtil.stringToAscii("S_CMD_03A0"))
                 }
             }
 
             ConfigEnum.OutLight.name -> {
                 when (keyValue.value) {
-                    "ILLSCN1" -> HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_03L2"))
+                    "ILLSCN1" -> hidManager.sendData(HexUtil.stringToAscii("S_CMD_03L2"))
 
-                    "ILLSCN0" -> HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_03L0"))
+                    "ILLSCN0" -> hidManager.sendData(HexUtil.stringToAscii("S_CMD_03L0"))
                 }
             }
 
             ConfigEnum.VoiceValue.name -> {
                 when (keyValue.value) {
-                    "GRBVLL20" -> HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_04V0"))
+                    "GRBVLL20" -> hidManager.sendData(HexUtil.stringToAscii("S_CMD_04V0"))
 
-                    "GRBVLL10" -> HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_04V1"))
+                    "GRBVLL10" -> hidManager.sendData(HexUtil.stringToAscii("S_CMD_04V1"))
 
-                    "GRBVLL2" -> HIDManager.getInstance()
-                        .sendData(HexUtil.stringToAscii("S_CMD_04V2"))
+                    "GRBVLL2" -> hidManager.sendData(HexUtil.stringToAscii("S_CMD_04V2"))
                 }
             }
         }

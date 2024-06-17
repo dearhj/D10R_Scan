@@ -9,7 +9,7 @@ import com.scanner.d10r.hardware.util.scanModule
 
 class BootBroadcastReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
-        if (scanModule in 1..3 && isOpenServiceReboot)
+        if (scanModule in 1..4 && isOpenServiceReboot)
             context.startForegroundService(Intent(context, Gh0stService::class.java))
     }
 }

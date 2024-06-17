@@ -10,6 +10,7 @@ import com.github.h4de5ing.baseui.selected
 import com.scanner.d10r.hardware.base.BaseBackActivity
 import com.scanner.d10r.hardware.bean.Constants.em3100
 import com.scanner.d10r.hardware.bean.Constants.hr22p
+import com.scanner.d10r.hardware.bean.Constants.m1
 import com.scanner.d10r.hardware.bean.Constants.me11
 import com.scanner.d10r.hardware.enums.ConfigEnum
 import com.scanner.d10r.hardware.util.filterModuleIndex
@@ -33,7 +34,8 @@ class ChooseScannerActivity : BaseBackActivity() {
         list = listOf(
             Pair(hr22p, getString(R.string.hr22p)),
             Pair(em3100, getString(R.string.em3100)),
-            Pair(me11, getString(R.string.me11))
+            Pair(me11, getString(R.string.me11)),
+            Pair(m1, getString(R.string.m1))
         )
         binding.btnSure.setOnClickListener { showDialog() }
         mPosition = filterModuleIndex(chooseItem)

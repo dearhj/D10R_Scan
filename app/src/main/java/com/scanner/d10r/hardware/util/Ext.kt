@@ -1,5 +1,6 @@
 package com.scanner.d10r.hardware.util
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.hardware.usb.UsbManager
@@ -15,6 +16,8 @@ import com.scanner.d10r.hardware.db.Config
 import com.scanner.d10r.hardware.db.ME11SymbologyData
 import com.scanner.d10r.hardware.enums.ConfigEnum
 import com.scannerd.d10r.hardware.BuildConfig
+import com.tsingtengms.scanmodule.libhidpos.HIDManager
+import com.tsingtengms.scanmodule.libhidpos.util.HexUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -45,7 +48,7 @@ var aimLight = "AMLENA1"   //瞄准灯
 //ILLSCN0  关闭
 var externalLighting = "ILLSCN1"    //外部照明灯
 
-var senseModeValue = "S_CMD_MS51"  //感应模式灵敏度
+var senseModeValue = "S_CMD_D001"  //感应模式灵敏度
 
 var model = ""  //设备型号
 
@@ -136,6 +139,7 @@ fun update2SymbologyData(me11SymbologyData: ME11SymbologyData) {
 fun import2DB(list: List<KeyValue>) = list.forEach {
     update2Db(Config(0, it.key, it.value))
 }
+
 private fun ME11SymbologyData.update() = MyApplication.dao.updateSymbologyData(this)
 private fun ME11SymbologyData.insert() = MyApplication.dao.insertSymbologyData(this)
 
@@ -149,7 +153,7 @@ fun firstUpdate(data: List<Config>) {
     configs.addAll(data)
     model = configs.firstOrNull { it.key == ConfigEnum.model.name }?.value.toString()
     scanModule = configs.firstOrNull { it.key == ConfigEnum.ScanModule.name }?.value?.toInt() ?: 0
-    if (scanModule == 3) {
+    if (scanModule == 3 || scanModule == 4) {
         isScanVoice =
             configs.firstOrNull { it.key == ConfigEnum.ScanVoice.name }?.value?.toBoolean() ?: true
         isStartVoice =
@@ -158,7 +162,7 @@ fun firstUpdate(data: List<Config>) {
             configs.firstOrNull { it.key == ConfigEnum.ScanModel.name }?.value ?: "SCNMOD0"
         oneScanOverTime = configs.firstOrNull { it.key == ConfigEnum.OneTime.name }?.value ?: "3000"
         senseModeValue =
-            configs.firstOrNull { it.key == ConfigEnum.SenseScanValue.name }?.value ?: "S_CMD_MS51"
+            configs.firstOrNull { it.key == ConfigEnum.SenseScanValue.name }?.value ?: "S_CMD_D001"
         reScanTime = configs.firstOrNull { it.key == ConfigEnum.ReTime.name }?.value ?: "100"
         aimLight = configs.firstOrNull { it.key == ConfigEnum.AimLight.name }?.value ?: "AMLENA1"
         externalLighting =
@@ -298,8 +302,7 @@ val importList = listOf(
     ConfigEnum.ScanSp.name,
     ConfigEnum.VoiceValue.name,
     ConfigEnum.AimLight.name,
-    ConfigEnum.OutLight.name,
-    ConfigEnum.SenseScanValue.name
+    ConfigEnum.OutLight.name
 )
 
 fun importConfig(
@@ -321,8 +324,8 @@ fun importConfig(
             }
             MyApplication.dao.deleteAllConfig()
             import2DB(list)
+            if (scanModule == 3 || scanModule == 4) import2DB(listScan)
             importScan(listScan)
-            if (scanModule == 3) import2DB(listScan)
             withContext(Dispatchers.Main) {
                 firstUpdate(MyApplication.dao.selectAllConfig())
                 success()
@@ -331,6 +334,11 @@ fun importConfig(
                     addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     context.startActivity(this)
                 }
+            }
+            //灵敏度导入在这里设置，可以确保每次导入都成功，具体原因未知。
+            if (scanModule == 3 || scanModule == 4) {
+                delay(2000)
+                setSenseValue(senseModeValue)
             }
         }
     } catch (e: Exception) {
@@ -467,5 +475,23 @@ fun setOnChangeUsb(onchange: ((String) -> Unit)) {
         override fun changeUsb(str: String) {
             onchange(str)
         }
+    }
+}
+
+@SuppressLint("StaticFieldLeak")
+val hidManager = HIDManager.getInstance()
+
+fun setSenseValue(value: String) {
+    scope.launch(Dispatchers.IO) {
+        if (isScanModel != "SCNMOD0") hidManager.sendData(HexUtil.stringToAscii("S_CMD_MT00"))  //切换为触发模式后，在设置感应模式灵敏度，可以确保灭灯后设置灵敏度，否则可能设置不成功，
+        delay(200)
+        hidManager.sendData(HexUtil.stringToAscii("S_CMD_MS50")) //启动灵敏度自定义设置
+        hidManager.sendData(HexUtil.stringToAscii(value))   //灵敏度从极低到极高分别为 45、35、25、15、05 （0~50）
+        hidManager.sendData(HexUtil.stringToAscii("S_CMD_D005"))
+        hidManager.sendData(HexUtil.stringToAscii("S_CMD_DFFF"))   //保存自定义设置
+        delay(200)
+        if (isScanModel == "SCNMOD2") hidManager.sendData(HexUtil.stringToAscii("S_CMD_020F"))   //灵敏度设置完毕，恢复为感应模式
+        else if (isScanModel == "SCNMOD3") hidManager.sendData(HexUtil.stringToAscii("S_CMD_020E"))   //灵敏度设置完毕，恢复为连续扫描模式
+        updateKT(ConfigEnum.SenseScanValue.name, value)
     }
 }
