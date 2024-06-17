@@ -27,6 +27,7 @@ class SymbologyHrNewLandActivity : BaseBackActivity() {
         if (scanModule == 1) symbologyConfig = getAllConfig()
         else if (scanModule == 2) symbologyConfig = getAllEM3100Config()
         else if (scanModule == 3) symbologyConfig = getAllME11Config()
+        else if (scanModule == 4) symbologyConfig = getAllM1Config()
 
         symbologyConfig!!.forEach { codeObj ->
             val secondList = ArrayList<BaseNode>()

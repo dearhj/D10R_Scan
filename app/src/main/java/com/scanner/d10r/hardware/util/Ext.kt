@@ -261,6 +261,7 @@ fun filterModuleIndex(deviceType: Int): Int {
         com.scanner.d10r.hardware.bean.Constants.hr22p -> 0
         com.scanner.d10r.hardware.bean.Constants.em3100 -> 1
         com.scanner.d10r.hardware.bean.Constants.me11 -> 2
+        com.scanner.d10r.hardware.bean.Constants.m1 -> 3
         else -> 0
     }
 }

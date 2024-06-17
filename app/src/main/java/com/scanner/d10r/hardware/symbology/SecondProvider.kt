@@ -35,12 +35,11 @@ class SecondProvider(
     private val tripleList = mutableListOf<Pair<String, Boolean>>()
     private val newTripleList = mutableListOf<Pair<String, Boolean>>()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onClick(helper: BaseViewHolder, view: View, data: BaseNode, position: Int) {
         val entity = data as SecondNode
         val length = entity.getLength()
         val addCom = entity.getAddValue()
-        if (scanModule != 3) {
+        if (scanModule == 1 || scanModule == 2) {
             val defaultCom = entity.getDefault()
             if (defaultCom != "") {
                 confirmDefaultDialog(defaultCom)
@@ -117,7 +116,7 @@ class SecondProvider(
             subAdapter.setNewInstance(tripleList.toMutableList())
             subAdapter.setOnItemClickListener { _, _, pos ->
                 entity.getUiValue()?.get(pos)?.apply {
-                    if (scanModule != 3) {
+                    if (scanModule == 1 || scanModule == 2) {
                         val result = ds.setConfig("@$this")
                         if (!result) {
                             println("设置失败！！")
@@ -150,7 +149,6 @@ class SecondProvider(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun showSetLengthDialog(length: CodeLength, result: Int, id: Long) {
         try {
             var setValue = result
@@ -177,7 +175,7 @@ class SecondProvider(
             alertBuilder.setView(v)
             alertBuilder.setNegativeButton(android.R.string.cancel, null)
             alertBuilder.setPositiveButton(android.R.string.ok) { _, _ ->
-                if (scanModule != 3) {
+                if (scanModule == 1 || scanModule == 2) {
                     if (!ds.setConfig("@${length.setCom}$setValue")) {
                         println("设置失败！！")
                     }
