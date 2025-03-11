@@ -42,12 +42,14 @@ import com.scanner.d10r.hardware.util.deletePrefixChar
 import com.scanner.d10r.hardware.util.deleteSuffix
 import com.scanner.d10r.hardware.util.deleteSuffixChar
 import com.scanner.d10r.hardware.util.deviceChange
+import com.scanner.d10r.hardware.util.hidManager
 import com.scanner.d10r.hardware.util.isAutoCleanEditText
 import com.scanner.d10r.hardware.util.isClipBoardChoose
 import com.scanner.d10r.hardware.util.isFilterSpace
 import com.scanner.d10r.hardware.util.isHIDChoose
 import com.scanner.d10r.hardware.util.isOurApp
 import com.scanner.d10r.hardware.util.isReplaceInvisibleChar
+import com.scanner.d10r.hardware.util.isScanModel
 import com.scanner.d10r.hardware.util.isWidgetChoose
 import com.scanner.d10r.hardware.util.positionMode
 import com.scanner.d10r.hardware.util.replaceChar
@@ -152,8 +154,28 @@ class UsbScanService : LifecycleService() {
                 else if (status == ConnectionStatus.COMMUNICATION_OPEN) {
                     ydOpenChecked = true
                     "通讯建立成功".logD()
-                    //建立连接后，应该修改连续模式识读间隔时长为0ms
-                    HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_MARR000"))
+                    try {
+                        isScanModel = "SCNMOD2"
+                        //建立连接后，应该修改连续模式识读间隔时长为0ms
+                        HIDManager.getInstance().sendData(HexUtil.stringToAscii("S_CMD_MARR000"))
+                        //设置扫描模式
+                        when (isScanModel) {
+                            "SCNMOD0" -> {
+                                hidManager.sendData(HexUtil.stringToAscii("S_CMD_MT00"))
+                                hidManager.sendData(HexUtil.stringToAscii("S_CMD_MT10"))
+                            }
+
+                            "SCNMOD2" -> hidManager.sendData(HexUtil.stringToAscii("S_CMD_020F"))
+                            "SCNMOD3" -> hidManager.sendData(HexUtil.stringToAscii("S_CMD_020E"))
+                            else -> {
+                                hidManager.sendData(HexUtil.stringToAscii("S_CMD_MT00"))
+                                hidManager.sendData(HexUtil.stringToAscii("S_CMD_MT10"))
+                            }
+                        }
+                        println("扫描模式设置成功")
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
             }
 
@@ -216,6 +238,10 @@ class UsbScanService : LifecycleService() {
                     ds.setConfig("@RRDENA1")
                     ds.setConfig("@RRDDUR100")
                 }
+                //默认设置扫描模式
+                println("扫描模式为$isScanModel")
+                if (!ds.setConfig("@$isScanModel")) println("扫描模式设置失败")
+                else println("扫描模式设置成功")
             } catch (_: Exception) {
             }
         }

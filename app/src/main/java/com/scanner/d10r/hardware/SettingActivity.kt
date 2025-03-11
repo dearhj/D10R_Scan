@@ -293,9 +293,11 @@ class SettingActivity : BaseBackActivity() {
                     3 -> "@SCNMOD4"
                     else -> "@SCNMOD0"
                 }
-                isScanModel = mode.substring(1)
                 if (!ds.setConfig(mode)) {
                     showToast(getString(R.string.TextConfigErr))
+                } else {
+                    update(ConfigEnum.ScanModel.name, isScanModel)
+                    isScanModel = mode.substring(1)
                 }
             }
         }

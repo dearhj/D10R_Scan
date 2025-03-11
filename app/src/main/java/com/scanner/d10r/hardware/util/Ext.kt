@@ -153,13 +153,12 @@ fun firstUpdate(data: List<Config>) {
     configs.addAll(data)
     model = configs.firstOrNull { it.key == ConfigEnum.model.name }?.value.toString()
     scanModule = configs.firstOrNull { it.key == ConfigEnum.ScanModule.name }?.value?.toInt() ?: 0
+    isScanModel = configs.firstOrNull { it.key == ConfigEnum.ScanModel.name }?.value ?: "SCNMOD0"
     if (scanModule == 3 || scanModule == 4) {
         isScanVoice =
             configs.firstOrNull { it.key == ConfigEnum.ScanVoice.name }?.value?.toBoolean() ?: true
         isStartVoice =
             configs.firstOrNull { it.key == ConfigEnum.StartVoice.name }?.value?.toBoolean() ?: true
-        isScanModel =
-            configs.firstOrNull { it.key == ConfigEnum.ScanModel.name }?.value ?: "SCNMOD0"
         oneScanOverTime = configs.firstOrNull { it.key == ConfigEnum.OneTime.name }?.value ?: "3000"
         senseModeValue =
             configs.firstOrNull { it.key == ConfigEnum.SenseScanValue.name }?.value ?: "S_CMD_D001"
